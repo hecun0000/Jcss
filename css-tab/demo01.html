@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>纯CSS的导航栏Tab切换方案</title>
+ </head>
+ <style>
+ /*初始样式*/
+   .container{
+		position:relative;
+		width:400px;
+		margin: 50px auto;
+	}
+	.nav{
+		position:relative;
+		/*overflow:hidden;*/
+	}
+	ul{
+		list-style-type: none;
+		padding: 0px;
+		margin: 0px;
+	}
+
+	li{
+		width:200px;
+		float:left;
+		text-align:center;
+		background:#ddd;
+	}
+
+	li a{
+		display:block;
+		width:200px;
+		line-height:36px;
+		font-size:18px;
+		cursor:pointer;
+		text-decoration:none;
+		color:#000;
+	}
+/*********************************/
+	#content1,
+	#content2{
+		position:absolute;
+		/*overflow:hidden;*/
+		top:36px;
+		width:400px;
+		height:100px;
+		border:1px solid #999;
+		box-sizing:border-box;
+		padding:10px;
+		width:100%;
+		background: #fff;
+		/*一开始为none*/
+		display:none;
+		
+   }
+	/*:target 是 CSS3 新增的一个伪类，可用于选取当前活动的目标元素。当然 URL 末尾带有锚名称 #，就可以指向文档内某个具体的元素。这个被链接的元素就是目标元素(target element)。它需要一个 id 去匹配文档中的 target 。*/
+	#content1:target,
+	#content2:target{
+		display:block;
+	}
+
+	#content1.active {
+		display:block;
+	}
+	.active ~ .nav li:first-child {
+			background:#ff7300;
+			color:#fff;
+	}
+	/*改变tab颜色
+		兄弟选择符 ~	E~F 只能选择 E 元素 之后 的 F 元素
+	*/
+	#content1:target ~ .nav li{
+		background:#ddd;
+		color:#000;
+	}
+	#content1:target ~ .nav li:first-child{
+		background:#ff7300;
+        color:#fff;
+	}
+
+	#content2:target ~ .nav li{
+	background:#ddd;
+	color:#000;
+	}
+	#content2:target ~ .nav li:last-child{
+		background:#ff7300;
+        color:#fff;
+	}
+	
+.wrap{
+	position:absolute;
+	/*overflow:hidden;*/
+	top:36px;
+	width:400px;
+	height:100px;
+	border:1px solid #999;
+	box-sizing:border-box;
+}
+ </style>
+ <body>
+	 <div class="container">
+		
+		<div id="content1"  class="active">列表1内容:123456</div>
+		<div id="content2">列表2内容:abcdefgkijkl</div>
+
+		<ul class='nav'>
+			<li><a href="#content1">列表1</a></li>
+			<li><a href="#content2">列表2</a></li>
+		</ul>
+		<!-- <div class="wrap"></div> -->
+	 </div>
+ </body>
+</html>
