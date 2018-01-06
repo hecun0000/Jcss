@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>纯CSS的导航栏Tab切换方案</title>
+ </head>
+ <style>
+ /*初始样式*/
+.container{
+	position:relative;
+	width:400px;
+	margin: 50px auto;
+}
+ul{
+		list-style-type: none;
+		padding: 0px;
+		margin: 0px;
+}
+input{
+	display:none;
+}
+
+
+.nav{
+	position:relative;
+	overflow:hidden;
+}
+
+li{
+	width:200px;
+	float:left;
+	text-align:center;
+	background:#ddd;
+}
+
+li label{
+	display:block;
+	width:200px;
+	line-height:36px;
+	font-size:18px;
+	cursor:pointer;
+}
+
+.content{
+	position:relative;
+	overflow:hidden;
+	width:400px;
+	height:100px;
+	border:1px solid #999;
+	box-sizing:border-box;
+	padding:10px;
+}
+
+.content1,
+.content2{
+	display:none;
+	width:100%;
+	height:100%;
+}
+
+.nav1:checked ~ .nav li {
+	background:#ddd;
+	color:#000;	
+}
+.nav1:checked ~ .nav li:first-child{
+		background:#ff7300;
+		color:#fff;
+}
+
+
+
+.nav2:checked ~ .nav li{
+	background:#ddd;
+	color:#000;
+}
+.nav2:checked ~ .nav li:last-child{
+		background:#ff7300;
+		color:#fff;
+	}
+
+
+
+.nav1:checked ~ .content > div{
+	display:none;
+}	
+.nav1:checked ~ .content > div:first-child{
+display:block;
+}
+
+
+.nav2:checked ~ .content > div{
+	display:none;		
+}
+.nav2:checked ~ .content > div:last-child{
+	display:block;
+}
+
+.active {
+		background:#ff7300;
+		color:#fff;
+}
+/*默认状态*/
+.default{
+	display:block;
+}
+/****************************/	
+/*
+	.nav1:checked ~ .nav li {
+		display:none
+	}
+
+	 /*Tab切换 
+	.navT1 input{
+		display:none;
+	}
+*/
+
+
+ </style>
+ <body>
+	 <div class="container">
+<!--<div>
+		<p>
+			单击不切换
+		</p>
+		<input class="nav1" type="radio">选中消失
+		<ul class='nav'>
+			<li>列表1</li>
+		</ul>
+		<hr>
+		<hr>-->
+
+		<!-- Tab切换 
+		<p>
+			Tab切换
+		</p>
+				
+		<input class="navT1" id="li1" type="radio">
+
+		<ul class='navT'>
+			<li><label for="li1">列表1</label></li>
+		</ul>
+	 </div>
+		 
+-->
+		<!-- 点击列表1->for->使input:checked->采用兄弟选择器content1->display:block -->
+
+		<input class="nav1" id="li1" type="radio" name="nav">
+		<input class="nav2" id="li2" type="radio" name="nav">
+		<ul class='nav'>
+			<li class='active'><label for="li1">列表1</label></li>
+			<li><label for="li2">列表2</label></li>
+		</ul>
+		<div class="content">
+			<div class="content1 default">列表1内容:123456</div>
+			<div class="content2">列表2内容:abcdefgkijkl</div>
+		</div>
+
+	 </div>
+ </body>
+</html>
