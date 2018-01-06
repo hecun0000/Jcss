@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>CSS3 旋转缩放</title>
+ </head>
+ <style>
+	div{
+		position:relative;
+		width:100px;
+		height:100px;
+		box-sizing:border-box;
+		border:1px solid #000;
+		margin:50px auto;
+		line-height:120px;
+		text-indent:5px; /*text-indent 属性规定文本块中首行文本的缩进*/
+	}	
+/*使用为元素画一条直线*/
+div::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  width:100%;
+  height:50px;
+  box-sizing:border-box;
+  border-bottom:1px solid deeppink;  /*使用为元素画一条直线*/
+  transform-origin:bottom center;  /*transform-origin 属性允许您改变被转换元素的位置。*/
+  /*transform:rotateZ(45deg) scale(1.414);*/
+  /*animation 属性是一个简写属性，用于设置六个动画属性*/
+  animation:slash 5s infinite ease; 
+}
+
+@keyframes slash{
+  0%{
+    transform:rotateZ(0deg) scale(1);
+  }
+  30%{
+    transform:rotateZ(45deg) scale(1);
+  }
+  60%{
+    transform:rotateZ(45deg) scale(1.414);
+  }
+  100%{
+    transform:rotateZ(45deg) scale(1.414);
+  }
+}
+ </style>
+ <body>
+	<div></div>
+ </body>
+</html>
