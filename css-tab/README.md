@@ -47,7 +47,7 @@
 }
 ```
 基本方法与思路已经实现, 下来就是小的修补: 
-
+[对应的demo可点击查看](http://hecun0000.github.io/tab-target.html)
 
 - ### 方法二：<input type="radio"> && <label for=""> 
 
@@ -68,4 +68,4 @@ input{
     display:none;
 }
 ```
-[对应的demo可点击查看](./demo2.html)
+[对应的demo可点击查看](http://hecun0000.github.io/tab-input.html)
