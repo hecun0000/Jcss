@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>text-align和伪类元素实现多行对齐</title>
+</head>
+<style>
+.container{
+	width: 400px;
+	margin: auto;
+	background: #999;
+}
+.justify{
+  text-align: justify;
+}
+
+.justify i{
+  width:24px;
+  line-height:24px;
+  display:inline-block;
+  text-align:center;
+  border-radius:50%;
+}
+.justify:after {
+  content: "";
+  display: inline-block;
+  position: relative;
+  width: 100%;
+}
+</style>
+<body>
+<div class="container">
+    <div class="justify">
+        <i>1</i>
+        <i>2</i>
+        <i>3</i>
+        <i>4</i>
+        <i>5</i>
+    </div>
+</div> 
+</body>
+</html>
