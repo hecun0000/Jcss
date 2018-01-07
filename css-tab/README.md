@@ -47,11 +47,12 @@
 }
 ```
 基本方法与思路已经实现, 下来就是小的修补: 
-[对应的demo可点击查看](http://hecun0000.github.io/tab-target.html)
 
-- ### 方法二：<input type="radio"> && <label for=""> 
+[对应的demo可点击查看](http://hecun.tech/css/css-tab/tab-target.html)
 
-上面的方法利用a标签添加锚点的方法接受点击的事件, 其次还有拥有checked的表单元素, <input type="radio"> 或者 <input type="checkbox"> 。  
+- ### 方法二：input type="radio" && label for=""  
+
+上面的方法利用a标签添加锚点的方法接受点击的事件, 其次还有拥有checked的表单元素, input type="radio" 或者 input type="checkbox"。  
 
 通常在点击切换tab的时候,点击的时li元素而不是表单元素, 此时就应该用到label元素. 
 ```html
@@ -68,4 +69,4 @@ input{
     display:none;
 }
 ```
-[对应的demo可点击查看](http://hecun0000.github.io/tab-input.html)
+[对应的demo可点击查看](http://hecun.tech/css/css-tab/tab-input.html)
