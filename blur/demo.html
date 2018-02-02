@@ -4,8 +4,18 @@
 	<meta charset="UTF-8">
 	<title>毛玻璃效果</title>
 	<style>
-		body,.main::before{
-			background: #fff url(1.jpg)  0/cover no-repeat fixed;
+		.main::before{
+			background: #fff url(1.jpg)   no-repeat fixed;
+			-webkit-background-size: cover;
+			background-size: cover;
+		}
+		body {
+			width: 100%;
+			height: auto;
+			background: #fff url(1.jpg)   no-repeat fixed;
+			-webkit-background-size: cover;
+			background-size: cover;
+			overflow: hidden;
 		}
 
 		.main {
@@ -18,22 +28,25 @@
 			width: 400px;
 			height: 180px;
 			color: #fff;
-			/*background: hsla(0,0%,100%,.3);*/
+			background: #666;
+			background: hsla(0,0%,100%,.15);
 			overflow: hidden;
 			padding: 20px;
 			border-radius: 10px;
 			line-height: 40px;
 			text-indent:32px;
-			box-shadow: 0px 0px 20px #222;
+			-webkit-box-shadow: 0px 0px 20px #222;
+			        box-shadow: 0px 0px 20px #222;
 		}
 
 		.main p {
 			text-align: right;
 		}
 
-		.main::before {
+		.main:before {
 			content: "";
-			filter: blur(12px);
+			-webkit-filter: blur(12px);
+			        filter: blur(12px);
 			position: absolute;
 			top: 0;
 			bottom: 0;
