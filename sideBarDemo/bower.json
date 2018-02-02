@@ -1,0 +1,21 @@
+{
+  "name": "sideBarDemo",
+  "version": "0.0.1",
+  "authors": [
+    "zhangpengpeng <zhangpp520@gmail.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "3.1.1",
+    "modernizr": "~2.7.2"
+  }
+}

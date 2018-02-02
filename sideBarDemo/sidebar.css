@@ -1,0 +1,134 @@
+body {
+	margin: 0;
+}
+.fullHeight {
+	height: 100%;
+}
+.sidebar {
+	float: left;
+	border: 1px solid black;
+	width: 150px;
+	position: absolute;
+	opacity:0;
+}
+.controller {
+	float: right;
+}
+
+@-webkit-keyframes move_right {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+		-webkit-transform: translateX(120px);
+		transform: translateX(120px);
+	}
+}
+
+@keyframes move_right {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+		-webkit-transform: translateX(120px);
+		transform: translateX(120px);
+	}
+}
+
+@-webkit-keyframes move_left {
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+		-webkit-transform: translateX(-120px);
+		transform: translateX(-120px);
+	}
+}
+
+@keyframes move_left {
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+		-webkit-transform: translateX(-120px);
+		transform: translateX(-120px);
+	}
+}
+.move_right {
+	-webkit-animation-name            : move_right;
+	animation-name            : move_right;
+	-webkit-animation-duration        : 1s;
+	animation-duration        : 1s;
+	-webkit-animation-iteration-count : 1;
+	animation-iteration-count : 1;
+	-webkit-animation-fill-mode : forwards;
+	animation-fill-mode : forwards;
+}
+
+.move_left {
+	-webkit-animation-name            : move_left;
+	animation-name            : move_left;
+	-webkit-animation-duration        : 1s;
+	animation-duration        : 1s;
+	-webkit-animation-iteration-count : 1;
+	animation-iteration-count : 1;
+	-webkit-animation-fill-mode : forwards;
+	animation-fill-mode : forwards;
+}
+@-webkit-keyframes move_up {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+		-webkit-transform: translateY(-250px);
+		transform: translateY(-250px);
+	}
+}
+
+@keyframes move_up {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+		-webkit-transform: translateY(-250px);
+		transform: translateY(-250px);
+	}
+}
+
+.move_up {
+	-webkit-animation-name            : move_up;
+	animation-name            : move_up;
+	-webkit-animation-duration        : 1s;
+	animation-duration        : 1s;
+	-webkit-animation-iteration-count : 1;
+	animation-iteration-count : 1;
+	-webkit-animation-fill-mode : forwards;
+	animation-fill-mode : forwards;
+}
+.fadeIn {
+	-webkit-transform : translateX(120px);
+	transform : translateX(120px); 
+	opacity: 1;
+}
+
+.fadeInUp {
+	-webkit-transform : translateY(-250px);
+	transform : translateY(-250px);
+	opacity: 1;
+	-webkit-transition :-webkit-transform .2s ease-out,opacity .2s ease-out; 
+	transition :transform .2s ease-out, opacity .2s ease-out;
+}
+
+.fadeOutLeft {
+	-webkit-transform : translateX(-120px);
+	transform : translateX(-120px); 
+	opacity: 0.0;
+	-webkit-transition :-webkit-transform .2s ease-out,opacity .2s ease-out; 
+	transition :transform .2s ease-out, opacity .2s ease-out;
+}
