@@ -1,38 +1,46 @@
 
 var canvasWidth = document.documentElement.clientWidth || document.body.clientWidth;
-var canvasHeight = document.documentElement.clientHeight || document.body.clientHeight;
+var canvasHeight = (document.documentElement.clientHeight || document.body.clientHeight) -200;
 var R= 8;
 var MARGIN_TOP= 60;
-var MARGIN_LEFT= 250;
+// var MARGIN_LEFT= 250;
 var curShowTimeSeconds = 0;
-const endTime = new Date(2018, 1, 8, 18, 47, 52);
+const endTime = new Date(2018, 1, 16, 0, 0, 0);
 var balls = [];
 const colors = ["#33B5E5", "#0099CC", "#AA66CC", "#9933CC", "#99CC00", "#669900", "#FFBB33", "#FF8800", "#FF4444", "#CC0000"]
 
 window.onload = function(){
-    var canvas = document.getElementById("canvas");
-    var ctx = canvas.getContext("2d");
-    MARGIN_LEFT = Math.round(canvasWidth / 10);
+    
+    MARGIN_LEFT = canvasWidth/2-52*(R+1);
     canvas.width = canvasWidth;
     canvas.height = canvasHeight;
     curShowTimeSeconds = getCurrentShowTimeSeconds();
-    setInterval(function () {
-        render(ctx);
-        update();
-    },50)
-    
+    //定时器方法
+    // setInterval(function () {
+    //     render(ctx);
+    //     update();
+    // },50)
+    animation();
+
 }
 
+function animation(){
+    var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext("2d");
+    render(ctx);
+    update();
+    window.requestAnimationFrame(animation);
+}
 function update(){
     var nextShowTimeSeconds = getCurrentShowTimeSeconds();
 
-    var nextHours = parseInt(nextShowTimeSeconds / 3600);
-    var nextMinutes = parseInt((nextShowTimeSeconds - nextHours * 3600) / 60)
-    var nextSeconds = nextShowTimeSeconds % 60
-
-    var curHours = parseInt(curShowTimeSeconds / 3600);
-    var curMinutes = parseInt((curShowTimeSeconds - curHours * 3600) / 60)
-    var curSeconds = curShowTimeSeconds % 60;
+    var nextHours = parseInt(nextShowTimeSeconds / 60 / 60 % 24, 10);
+    var nextMinutes = parseInt(nextShowTimeSeconds / 60 % 60, 10);
+    var nextSeconds = parseInt(nextShowTimeSeconds % 60, 10);
+  
+    var curHours = parseInt(curShowTimeSeconds / 60 / 60 % 24, 10);
+    var curMinutes = parseInt(curShowTimeSeconds / 60 % 60, 10);
+    var curSeconds = parseInt(curShowTimeSeconds % 60, 10);
 
     if (nextSeconds != curSeconds) {
         if (parseInt(curHours / 10) != parseInt(nextHours / 10)) {
@@ -56,7 +64,6 @@ function update(){
             addBalls(MARGIN_LEFT + 93 * (R + 1), MARGIN_TOP, parseInt(nextSeconds % 10));
         }
 
-        // console.log(balls)
         curShowTimeSeconds = nextShowTimeSeconds;
         
     }
@@ -82,17 +89,8 @@ function updateBalls() {
             }
         }
 
-        console.log(balls.length)
     }
 
-    // var cnt = 0
-    // for (var i = 0; i < balls.length; i++)
-    //     if (balls[i].x + R > 0 && balls[i].x - R < canvasWidth)
-    //         balls[cnt++] = balls[i]
-
-    // while (balls.length > cnt) {
-    //     balls.pop();
-    // }
 }
 function addBalls(x, y, num) {
     for (var i = 0; i < digit[num].length; i++){
@@ -123,9 +121,11 @@ function getCurrentShowTimeSeconds() {
 function render(ctx){
 
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-    var hours = parseInt(curShowTimeSeconds/ 3600);
-    var minutes = parseInt((curShowTimeSeconds- hours * 3600) / 60)
-    var seconds = curShowTimeSeconds% 60
+    var days = parseInt(curShowTimeSeconds / 60 / 60 / 24, 10); //计算剩余的天数 
+    document.getElementById("day").innerHTML= days;
+    var hours = parseInt(curShowTimeSeconds / 60 / 60 % 24, 10); //计算剩余的小时 
+    var minutes = parseInt(curShowTimeSeconds  / 60 % 60, 10);//计算剩余的分钟 
+    var seconds = parseInt(curShowTimeSeconds  % 60, 10);//计算剩余的秒数 
 
     renderDigit(MARGIN_LEFT,MARGIN_TOP,parseInt(hours/10),ctx);
     renderDigit(MARGIN_LEFT+15*(R+1),MARGIN_TOP,parseInt(hours%10),ctx);
@@ -147,7 +147,7 @@ function render(ctx){
 }
 
 function renderDigit(x,y,num,ctx){
-    ctx.fillStyle="red";
+    ctx.fillStyle="#9966cc";
     for (let i = 0; i < digit[num].length; i++) {
         for (let j = 0; j < digit[num][i].length; j++) {
             if(digit[num][i][j]===1){

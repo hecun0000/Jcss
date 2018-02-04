@@ -2,15 +2,36 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Page Title</title>
+    <title>2018春节倒计时</title>
     <style>
         body{
             margin: 0;
             overflow: hidden;
         }
+
+        .title {
+            width: 100%;
+            height: 200px;
+            text-align: center;
+            line-height: 200px;
+            font-size: 100px;
+            font-weight: 600;
+            background-image: -webkit-linear-gradient(left, #00ff88, #ffc700 25%, #00ff88 50%, #ffc700 75%, #00ff88);
+            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text;
+            -webkit-background-size: 200% 100%;
+            -webkit-animation: masked-animation 4s infinite linear;
+        }
+    @-webkit-keyframes masked-animation {
+         0%{ background-position: 0 0;}
+         100% { background-position: -100% 0;}
+    }
     </style>
 </head>
 <body>
+    <div class="title">
+        距离春节还剩 <span id="day">12</span> 天
+    </div>
     <canvas id="canvas"></canvas>
     <script src="digit.js"></script>
     <script src="index.js"></script>
