@@ -16,13 +16,21 @@
             line-height: 200px;
             font-size: 100px;
             font-weight: 600;
+            background-image: -webkit-gradient(linear, left top, right top, from(#00ff88), color-stop(25%, #ffc700), color-stop(50%, #00ff88), color-stop(75%, #ffc700), to(#00ff88));
             background-image: -webkit-linear-gradient(left, #00ff88, #ffc700 25%, #00ff88 50%, #ffc700 75%, #00ff88);
+            background-image: -o-linear-gradient(left, #00ff88, #ffc700 25%, #00ff88 50%, #ffc700 75%, #00ff88);
+            background-image: linear-gradient(left, #00ff88, #ffc700 25%, #00ff88 50%, #ffc700 75%, #00ff88);
             -webkit-text-fill-color: transparent;
-            -webkit-background-clip: text;
-            -webkit-background-size: 200% 100%;
+            background-clip: text;
+            background-size: 200% 100%;
             -webkit-animation: masked-animation 4s infinite linear;
+                    animation: masked-animation 4s infinite linear;
         }
     @-webkit-keyframes masked-animation {
+         0%{ background-position: 0 0;}
+         100% { background-position: -100% 0;}
+    }
+    @keyframes masked-animation {
          0%{ background-position: 0 0;}
          100% { background-position: -100% 0;}
     }
