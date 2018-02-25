@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas背景方案</title>
+	<style> 
+		body {
+			margin: 0;
+			overflow: hidden;
+		}
+		canvas {
+			background: linear-gradient(to bottom right, #50A3A2, #53E3A6);
+		}
+	</style>
+</head>
+<body>
+	<canvas id="canvas"></canvas>
+	<script>
+	var canvasWidth = document.documentElement.clientWidth || document.body.clientWidth;
+	var canvasHeight = document.documentElement.clientHeight || document.body.clientHeight;
+	var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext("2d");
+    // 设置宽高
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
+	// 绘制10个方块
+	var x = canvasHeight - 100;
+	ctx.fillStyle="#ffffff";
+	var big = [10, 20, 60, 60 ,30, 80, 60 ,50 ,50, 20];
+	
+	draw();
+
+	function draw(deg){
+		var iPrecent = 10;
+		for (var i = 0; i < 10; i++) {
+			iPrecent += canvasWidth*0.09;
+			ctx.fillRect(iPrecent,x,big[i],big[i]);
+		}
+	}
+
+	function ease(t,c,b,d) {
+        if ((t /= d / 2) < 1) return c / 2 * t * t * t * t * t + b;
+        return c / 2*((t -= 2) * t * t * t * t + 2) + b;
+    }
+	function move (t){
+		x-=10;
+        x= ease(t, canvasHeight+100, -100, 500);
+		ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+	}
+	var t= 500;
+	var deg = 0;
+	function roundMove() {
+		move(t);
+		t--;
+		if(t<=0){
+			t=500;
+		}
+		deg++;
+		draw(deg);
+		window.requestAnimationFrame(roundMove);
+	}
+	roundMove();
+	</script>
+</body>
+</html>
