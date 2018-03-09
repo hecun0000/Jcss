@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>loader</title>
+    <style>
+    body{
+    	width: 100vw;
+    	height: 100vh;
+    	font-size: 10vh;
+    }
+    .loader {
+        position: absolute;
+        top: calc(50% - 1.25em);
+        left: calc(50% - 1.25em);
+        width: 2.5em;
+        height: 2.5em;
+        transform: rotate(165deg);
+        z-index: 100;
+    }
+
+    .loader:before,
+    .loader:after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        display: block;
+        width: 0.5em;
+        height: 0.5em;
+        border-radius: 0.25em;
+        transform: translate(-50%, -50%);
+    }
+
+    .loader:before {
+        animation: before-data-v-3bfb2acc 2s infinite;
+    }
+
+    .loader:after {
+        animation: after-data-v-3bfb2acc 2s infinite;
+    }
+
+    @keyframes before-data-v-3bfb2acc {
+        0% {
+            width: 0.5em;
+            box-shadow: 1em -0.5em rgba(225, 20, 98, 0.75),
+            -1em 0.5em rgba(111, 202, 220, 0.75);
+        }
+        35% {
+            width: 2.5em;
+            box-shadow: 0 -0.5em rgba(225, 20, 98, 0.75),
+            0 0.5em rgba(111, 202, 220, 0.75);
+        }
+        70% {
+            width: 0.5em;
+            box-shadow: -1em -0.5em rgba(225, 20, 98, 0.75),
+            1em 0.5em rgba(111, 202, 220, 0.75);
+        }
+        100% {
+            box-shadow: 1em -0.5em rgba(225, 20, 98, 0.75),
+            -1em 0.5em rgba(111, 202, 220, 0.75);
+        }
+    }
+
+    @keyframes after-data-v-3bfb2acc {
+        0% {
+            height: 0.5em;
+            box-shadow: 0.5em 1em rgba(61, 184, 143, 0.75),
+            -0.5em -1em rgba(233, 169, 32, 0.75);
+        }
+        35% {
+            height: 2.5em;
+            box-shadow: 0.5em 0 rgba(61, 184, 143, 0.75),
+            -0.5em 0 rgba(233, 169, 32, 0.75);
+        }
+        70% {
+            height: 0.5em;
+            box-shadow: 0.5em -1em rgba(61, 184, 143, 0.75),
+            -0.5em 1em rgba(233, 169, 32, 0.75);
+        }
+        100% {
+            box-shadow: 0.5em 1em rgba(61, 184, 143, 0.75),
+            -0.5em -1em rgba(233, 169, 32, 0.75);
+        }
+    }
+    </style>
+</head>
+
+<body>
+    <div class="loader"></div>
+</body>
+
+</html>
