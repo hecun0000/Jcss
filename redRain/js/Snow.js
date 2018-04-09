@@ -1,7 +1,9 @@
 Particle3D=function(material){
 	THREE.Particle.call(this,material);
 	this.velocity=new THREE.Vector3(0,-8,0);//速度;
-	//this.velocity.rotateX(2);//旋转;
+	// this.velocity.rotateX(90);//旋转;
+	// this.velocity.rotateY(90);//旋转;
+	// this.velocity.rotateZ(90);//旋转;
 	this.gravity=new THREE.Vector3(0,0,0);//加速度;
 	this.drag=1;//速度相乘系数;
 };
