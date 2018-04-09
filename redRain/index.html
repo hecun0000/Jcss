@@ -12,6 +12,8 @@
             width: 100%;
             height: 100%;
             background-size: 100% 100%;
+            overflow: hidden;
+            background-image: url(images/bg.png);
         }
     </style>
     <script type="text/javascript" src="js/jquery.min.js"></script>
@@ -73,7 +75,7 @@
                 particle.position.z = Math.random() * 2000 - 1000;
                 particle.position.y = Math.random() * 2000 - 1000;
                 //particle.position.y = Math.random() * (1600-particle.position.z)-1000;
-                particle.scale.x = particle.scale.y = 0.5;
+                particle.scale.x = particle.scale.y = .5;
                 // init.rotateZ(12);
                 particle.rotation.z = roateAngle(45, -45);
                 console.log(particle.rotation.z)
@@ -117,7 +119,7 @@
     </script>
 </head>
 
-<body bgcolor="#eae0d9" id="body" onLoad="init()">
+<body id="body" onLoad="init()">
 </body>
 
 </html>
