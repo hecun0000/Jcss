@@ -33,7 +33,7 @@
 
         var particles = [];
 
-
+var raining;
         //THREE.ImageUtils.loadTexture( "img/ParticleSmoke.png" );
         // particleImage.src = 'images/ParticleSmoke.png';
         // particleImage.src= Math.random()>0.5?'images/red1.png':'images/red2.png';
@@ -59,7 +59,7 @@
             renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 
             //alert("message2");
-            for (var i = 0; i < 260; i++) {
+            for (var i = 0; i < 200; i++) {
                 //alert("message");
 
                 var particleImage = new Image();
@@ -78,7 +78,7 @@
                 particle.scale.x = particle.scale.y = .5;
                 // init.rotateZ(12);
                 particle.rotation.z = roateAngle(45, -45);
-                console.log(particle.rotation.z)
+                // console.log(particle.rotation.z)
                 scene.add(particle);
 
                 particles.push(particle);
@@ -86,10 +86,29 @@
 
             container.appendChild(renderer.domElement);
 
-            setInterval(loop, 1000 / 40);
+            raining = setInterval(function(){
+                 for (var i = 0; i < particles.length; i++) {
+                    var particle = particles[i];
+                    // console.log(particle)
+                    particle.updatePhysics();
+                    with(particle.position){
+                     if (y < -1000) {
+                        y =1000;
+                    }
+                    }
+                   
+                    
+                }
+
+                camera.lookAt(scene.position);
+
+                renderer.render(scene, camera);
+            }, 1000 / 40);
+            console.log(particle.updatePhysics)
+        
 
         }
-
+    
         function roateAngle(max, min) {
             return Math.PI / 180 * ((Math.random() * (max - min)) + min);
         }
@@ -98,17 +117,13 @@
         function loop() {
             for (var i = 0; i < particles.length; i++) {
                 var particle = particles[i];
+                // console.log(particle)
                 particle.updatePhysics();
-
+                
                 with(particle.position) {
-                    if ((y < -1000) && starSnow) {
+                    if (y < -100) {
                         y += 2000;
                     }
-
-                    if (x > 1000) x -= 2000;
-                    else if (x < -1000) x += 2000;
-                    if (z > 1000) z -= 2000;
-                    else if (z < -1000) z += 2000;
                 }
             }
 
@@ -118,8 +133,24 @@
         }
     </script>
 </head>
-
+<style>
+    .h1{
+        transform: translateY(1000px);
+        transition: all 8s linear
+    }
+</style>
 <body id="body" onLoad="init()">
+    <div class="close">关闭</div>
 </body>
-
+<script>
+    document.querySelector('.close').onclick=function(){
+        clearInterval(raining);
+        console.log(document.getElementsByTagName('canvas'))
+        document.getElementsByTagName('canvas')[0].style
+        .cssText=' transform: translateY(1000px);transition: all 3s linear';
+    
+        
+    }
+    
+</script>
 </html>
