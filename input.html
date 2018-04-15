@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>input</title>
+    <style>
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none !important;
+        margin: 0;
+    }
+    </style>
+</head>
+
+<body>
+    <input type="number" onkeyup="computed(event)">
+    <input type="text"  onKeyUp="this.value=this.value.replace(/[^\.\d]/g,'');this.value=this.value.replace('.',''); computed(event)" />		
+    <input type="number" onKeyUp="this.value=this.value.replace('.','');" />
+
+    <input type="text" value="1"  
+    onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"  
+    onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'0')}else{this.value=this.value.replace(/\D/g,'')}" /> 
+    <script>
+    function computed(event) {
+        console.log(event.target.value);
+        event.target.value = event.target.value.replace(/[^\.\d]/g, '')
+        // this.value=this.value.replace('.','');
+        event.target.value = event.target.value.replace('.', '')
+        console.log(1);
+    }
+    </script>
+</body>
+
+</html>
