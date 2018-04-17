@@ -784,7 +784,7 @@ var pagenum = 0;
 var total_round = $('.tabs-item').children('li').length;
 // 所有页数
 var total_pages = parseInt(total_round  / 7);
-// var round  = 46;
+var round  = 46;
 pagenum = parseInt(round/7)
 toPages(pagenum);
 toggleBtnClass();
@@ -795,6 +795,7 @@ $('.tabs-right').click(function() {
     toggleBtnClass();
     console.log(pagenum);
     if (pagenum > total_pages) {
+        pagenum = total_pages;
         return;
     }
     $('.tabs-item').css('transform', 'translateX(-' + pagenum * 907 + 'px)')
@@ -803,7 +804,8 @@ $('.tabs-right').click(function() {
 $('.tabs-left').click(function() {
     pagenum--;
     toggleBtnClass();
-    if (pagenum > total_pages) {
+    if (pagenum < 0) {
+        pagenum = 0;
         return;
     }
     $('.tabs-item').css('transform', 'translateX(-' + pagenum * 906 + 'px)')
