@@ -5,11 +5,9 @@ var R= 8;
 var MARGIN_TOP= 60;
 // var MARGIN_LEFT= 250;
 var curShowTimeSeconds = 0;
-<<<<<<< HEAD
-const endTime = new Date(2018, 5, 16, 0, 0, 0);
-=======
-const endTime = new Date(2018, 5, 1, 0, 0, 0);
->>>>>>> 2d1c5bf1eef26cfc8cc76a89ab9e0d49ce9828cc
+
+const endTime = new Date(2018, 5, 01, 0, 0, 0);
+
 var balls = [];
 const colors = ["#33B5E5", "#0099CC", "#AA66CC", "#9933CC", "#99CC00", "#669900", "#FFBB33", "#FF8800", "#FF4444", "#CC0000"]
 
