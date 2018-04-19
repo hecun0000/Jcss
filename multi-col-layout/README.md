@@ -64,7 +64,7 @@ css属性中text-align:justify通常是实现文本的两端对齐的效果.
   border-radius:50%;
 }
 ```
-[相关的demo](http://hecun0000.github.io/css/multi-col-layout/text-align.html)   
+[相关的demo](http://hecun0000.github.io/Jcss/multi-col-layout/text-align.html)   
 **兼容性: ie8+** 只要受到text-align-last属性的影响.  
 接下来用伪类元素, 想办法去替换上面的text-align-last属性.   
 只改变css:  
@@ -88,5 +88,5 @@ css属性中text-align:justify通常是实现文本的两端对齐的效果.
   width: 100%;
 }
 ```
-[相关demo](http://hecun0000.github.io/css/multi-col-layout/text-align+after.html)  
+[相关demo](http://hecun0000.github.io/Jcss/multi-col-layout/text-align+after.html)  
 再多配合几句 hack 代码，可以实现兼容到 IE6+ 
