@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../addons/haoman_dpm/img/base.css">
+    <link rel="stylesheet" href="../addons/haoman_dpm/img/style.css?v=33">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <title>红包雨记录</title>
+    <style>
+    body {
+        /*background: url(http://static.ledouya.com/Ft_8mDAGvIofqcFqFEY6trf3gT85?imageMogr2/auto-orient)  no-repeat;*/
+        /*background-size: 100% 100%;*/
+    }
+
+    .pop-shadow {
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, .6);
+        z-index: 15;
+        /*display: none;*/
+    }
+
+    .content {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+    }
+
+    .sb {
+        background: url(http://static.ledouya.com/Fvpb1PI5V38AT08T77qnfv1y4soG?imageMogr2/auto-orient) no-repeat;
+        background-size: 100%;
+        width: 17vw;
+        height: 221px;
+        position: absolute;
+        top: 3.76%;
+        -webkit-animation: shake1 .8s infinite linear;
+        animation: shake1 .8s infinite linear;
+        -webkit-transform-origin: center 0;
+        -ms-transform-origin: center 0;
+        transform-origin: center 0;
+    }
+
+    .left-sb {
+        left: 54%;
+    }
+
+    .right-sb {
+        right: 54%;
+        -webkit-animation-delay: -.4s;
+        animation-delay: -.4s;
+    }
+
+    @-webkit-keyframes shake1 {
+        from {
+            -webkit-transform: rotateZ(0);
+            transform: rotateZ(0);
+        }
+        20% {
+            -webkit-transform: rotateZ(-6deg);
+            transform: rotateZ(-6deg);
+        }
+        25% {
+            -webkit-transform: rotateZ(-8deg);
+            transform: rotateZ(-8deg);
+        }
+        30% {
+            -webkit-transform: rotateZ(-6deg);
+            transform: rotateZ(-6deg);
+        }
+
+        50% {
+            -webkit-transform: rotateZ(0);
+            transform: rotateZ(0);
+        }
+        70% {
+            -webkit-transform: rotateZ(6deg);
+            transform: rotateZ(6deg);
+        }
+        75% {
+            -webkit-transform: rotateZ(8deg);
+            transform: rotateZ(8deg);
+        }
+
+        80% {
+            -webkit-transform: rotateZ(6deg);
+            transform: rotateZ(6deg);
+        }
+        to {
+            -webkit-transform: rotateZ(0);
+            transform: rotateZ(0);
+        }
+    }
+
+    @keyframes shake1 {
+        from {
+            -webkit-transform: rotateZ(0);
+            transform: rotateZ(0);
+        }
+        20% {
+            -webkit-transform: rotateZ(-6deg);
+            transform: rotateZ(-6deg);
+        }
+        25% {
+            -webkit-transform: rotateZ(-8deg);
+            transform: rotateZ(-8deg);
+        }
+        30% {
+            -webkit-transform: rotateZ(-6deg);
+            transform: rotateZ(-6deg);
+        }
+
+        50% {
+            -webkit-transform: rotateZ(0);
+            transform: rotateZ(0);
+        }
+        70% {
+            -webkit-transform: rotateZ(6deg);
+            transform: rotateZ(6deg);
+        }
+        75% {
+            -webkit-transform: rotateZ(8deg);
+            transform: rotateZ(8deg);
+        }
+
+        80% {
+            -webkit-transform: rotateZ(6deg);
+            transform: rotateZ(6deg);
+        }
+        to {
+            -webkit-transform: rotateZ(0);
+            transform: rotateZ(0);
+        }
+    }
+
+    .top-container {
+        z-index: 12;
+    }
+
+    .get-top-ten {
+        width: 1100px;
+        height: 750px;
+        background: rgba(255, 94, 94, 1);
+        border-radius: 20px;
+        z-index: 20;
+        overflow: hidden;
+        /*position: relative;*/
+        /*display: none;*/
+    }
+
+    .get-top-ten .title {
+        height: 96px;
+        background: url("http://static.ledouya.com/FmpCq5SBIFTrj-0ZYCwBhnm81Yb0?imageMogr2/auto-orient") no-repeat;
+        background-size: 100% 100%;
+        position: relative;
+        z-index: 16;
+    }
+
+    .get-top-ten .title:after {
+        content: '';
+        width: 2000px;
+        height: 500px;
+        border-radius: 50%;
+        position: absolute;
+        top: -404px;
+        right: -438px;
+        -webkit-box-shadow: 0 0 0 129px #FF5E5E;
+        box-shadow: 0 0 0 129px #FF5E5E;
+        z-index: 17;
+        overflow: hidden;
+    }
+
+    .get-top-ten .title .top-ten-title {
+        display: block;
+        margin: auto;
+        background: url(http://static.ledouya.com/Fou142FWzzr1DC50N-G1rc_gVDja?imageMogr2) center no-repeat;
+        width: 270px;
+        height: 100%;
+    }
+
+    .get-top-ten .tabs {
+        height: 60px;
+        /*background: red;*/
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        position: absolute;
+        z-index: 20;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        width: 92%;
+        left: 4%;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+    }
+
+    .get-top-ten .tabs .tabs-item {
+        height: 50px;
+        /*display: flex;*/
+        /*justify-content: space-between;*/
+        line-height: 51px;
+        overflow: hidden;
+        /*height: 30px;*/
+        width: 100000px;
+        /*transform: translateX(-200px);*/
+        /*transform: translateX(-906px);*/
+        -webkit-transition: all .3s linear;
+        -o-transition: all .3s linear;
+        transition: all .3s linear;
+    }
+
+    .get-top-ten .radius {
+        background: #FF9696;
+        border-radius: 10px;
+    }
+
+    .get-top-ten .tabs-item li {
+        width: 95px;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        /*padding: 0 25px;*/
+        font-size: 20px;
+        font-weight: 900;
+        height: 51px;
+        text-align: center;
+        padding: 0 5px;
+        margin: 0 15px;
+        position: relative;
+        display: inline-block;
+    }
+
+    .get-top-ten .tabs-item li div {
+        cursor: pointer;
+    }
+
+    .get-top-ten .tabs-item li:after {
+        content: '';
+        width: 5px;
+        height: 29px;
+        background: #ff9696;
+        position: absolute;
+        right: -17px;
+        top: 50%;
+        margin-top: -15px;
+    }
+
+    .get-top-ten .tabs-item li:last-child::after {
+        content: '';
+        width: 0;
+        height: 0;
+        position: absolute;
+    }
+
+    .get-top-ten .tabs-item li.active a,
+    .get-top-ten .tabs-item li a:hover {
+        background: #ff9696;
+        border-radius: 10px;
+        display: block;
+    }
+
+    .get-top-ten .tabs .tabs-btn {
+        width: 51px;
+        height: 51px;
+        cursor: pointer;
+    }
+
+    .get-top-ten .tabs .tabs-left {
+
+        background: url(http://static.ledouya.com/FnkBKseA0_GwqMiIRvppSzFUxc36?imageMogr2/auto-orient) center no-repeat #ff9696;
+    }
+
+    .get-top-ten .tabs .tabs-left.disabled {
+        background: url(http://static.ledouya.com/FnkBKseA0_GwqMiIRvppSzFUxc36?imageMogr2/auto-orient) center no-repeat rgb(255, 94, 94);
+    }
+
+    .get-top-ten .tabs .tabs-right {
+        background: url(http://static.ledouya.com/FvSV75DdTg8VA6jyYSYjlxNZAaux?imageMogr2/auto-orient) center no-repeat #ff9696;
+        position: relative;
+        left: -10px;
+    }
+
+    .get-top-ten .tabs .tabs-right.disabled {
+        background: url(http://static.ledouya.com/FvSV75DdTg8VA6jyYSYjlxNZAaux?imageMogr2/auto-orient) center no-repeat rgb(255, 94, 94);
+    }
+
+    .get-top-ten .top-list {
+        position: absolute;
+        z-index: 20;
+        width: 90%;
+        top: 168px;
+        left: 5%;
+    }
+
+    .get-top-ten .top-list .list-title {
+        height: 60px;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        text-align: center;
+        font-size: 24px;
+        line-height: 60px;
+        border-bottom: 2px solid #FF7575;
+        border-top: 2px solid #FF7575;
+    }
+
+    .get-top-ten .top-list .avatar-item {
+        width: 20%;
+    }
+
+    .get-top-ten .top-list .nickname-item {
+        width: 40%;
+    }
+
+    .get-top-ten .top-list .money-item {
+        width: 20%;
+        text-align: right;
+        margin-right: 20px;
+    }
+
+    .get-top-ten .top-list .top-content {
+        height: 451px;
+        overflow-y: auto;
+    }
+
+
+    .get-top-ten .top-list .top-content::-webkit-scrollbar {
+        /*滚动条整体样式*/
+        width: 4px;
+        /*高宽分别对应横竖滚动条的尺寸*/
+        height: 1px;
+    }
+
+    .get-top-ten .top-list .top-content::-webkit-scrollbar-thumb {
+        /*滚动条里面小方块*/
+        border-radius: 4px;
+        -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+        background: #e44134;
+    }
+
+    .get-top-ten .top-list .top-content::-webkit-scrollbar-track {
+        /*滚动条里面轨道*/
+        -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+        border-radius: 4px;
+        background: #EDEDED;
+    }
+
+    .get-top-ten .top-list .top-content .item {
+        height: 88px;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        text-align: center;
+        border-bottom: 2px solid #FF7575;
+        font-size: 20px;
+    }
+    /*t头像框*/
+
+    .get-top-ten .top-list .top-content .money span {
+        color: #FFF001;
+    }
+
+    .get-top-ten .top-list .top-content .luck {
+        width: 50px;
+        height: 50px;
+        margin: 0 auto;
+        position: relative;
+    }
+
+    .get-top-ten .top-list .top-content .item img {
+        height: 100%;
+        border-radius: 50%;
+        border: 3px solid #E1505B;
+        position: relative;
+    }
+
+    .get-top-ten .top-list .top-content .top {
+        width: 50px;
+        height: 50px;
+        margin: 0 auto;
+        position: relative;
+    }
+
+
+
+    .get-top-ten .top-list .top-content .luck:after {
+        content: '';
+        width: 50px;
+        height: 50px;
+        background: url("http://static.ledouya.com/Fvel2Y852rAb9ybHny8Kb93aveEL?imageMogr2/auto-orient") no-repeat;
+        position: absolute;
+        top: -18px;
+        left: -14px;
+    }
+    /*手气最佳前三*/
+
+    .get-top-ten .top-list .top-content .money span {
+        position: relative;
+    }
+
+    .get-top-ten .top-list .top-content .money .first:before {
+        content: '';
+        width: 26px;
+        height: 26px;
+        position: absolute;
+        top: 0;
+        left: -30px;
+        background: url(http://static.ledouya.com/Fj5_2V2gLcFUetIPj3mdDKVmufwc?imageMogr2) no-repeat center;
+    }
+
+    .get-top-ten .top-list .top-content .money .second:before {
+        content: '';
+        width: 26px;
+        height: 26px;
+        position: absolute;
+        top: 0;
+        left: -30px;
+        background: url(http://static.ledouya.com/FiE4Zw7iPv3bWV7oBe5jKWls1MLf?imageMogr2/auto-orient) no-repeat center;
+    }
+
+    .get-top-ten .top-list .top-content .money .second:before {
+        content: '';
+        width: 26px;
+        height: 26px;
+        position: absolute;
+        top: 0;
+        left: -30px;
+        background: url(http://static.ledouya.com/FiE4Zw7iPv3bWV7oBe5jKWls1MLf?imageMogr2/auto-orient) no-repeat center;
+    }
+
+    .get-top-ten .top-list .top-content .money .third:before {
+        content: '';
+        width: 26px;
+        height: 26px;
+        position: absolute;
+        top: 0;
+        left: -30px;
+        background: url(http://static.ledouya.com/Ft-Ln7wTJeDuDmY0gP6gC5O1-t0h?imageMogr2/auto-orient) no-repeat center;
+    }
+
+    .get-top-ten .close-top-ten {
+        width: 32px;
+        height: 32px;
+        position: absolute;
+        right: 20px;
+        top: 15px;
+        background: url(http://static.ledouya.com/Fh6RJzLC5w6W4kxSsjJCdiOugED-?imageMogr2/auto-orient) no-repeat;
+        z-index: 30;
+        cursor: pointer;
+        -webkit-transition: all .3s linear;
+        -o-transition: all .3s linear;
+        transition: all .3s linear;
+    }
+
+    .get-top-ten .close-top-ten:hover {
+        -webkit-transform: rotate(180deg);
+        -ms-transform: rotate(180deg);
+        transform: rotate(180deg);
+    }
+    /*loading动画*/
+
+    .get-top-ten .top-list .top-content {
+        position: relative;
+    }
+
+    .loading9 {
+        width: 96px;
+        height: 20px;
+    }
+
+    .loading9 i {
+        width: 15px;
+        height: 15px;
+        display: inline-block;
+        border-radius: 50%;
+        background: #fff;
+    }
+
+    .loading9 i:first-child {
+        -webkit-animation: loading9-ani2 0.5s linear infinite;
+        animation: loading9-ani2 0.5s linear infinite;
+        opacity: 0;
+        -webkit-transform: translate(-20px);
+        -ms-transform: translate(-20px);
+        transform: translate(-20px);
+    }
+
+    .loading9 i:nth-child(2),
+    .loading9 i:nth-child(3) {
+        -webkit-animation: loading9-ani3 0.5s linear infinite;
+        animation: loading9-ani3 0.5s linear infinite;
+    }
+
+    .loading9 i:last-child {
+        -webkit-animation: loading9-ani1 0.5s linear infinite;
+        animation: loading9-ani1 0.5s linear infinite;
+    }
+
+    @-webkit-keyframes loading9-ani1 {
+        100% {
+            -webkit-transform: translate(40px);
+            transform: translate(40px);
+            opacity: 0;
+        }
+    }
+
+    @keyframes loading9-ani1 {
+        100% {
+            -webkit-transform: translate(40px);
+            transform: translate(40px);
+            opacity: 0;
+        }
+    }
+
+    @-webkit-keyframes loading9-ani2 {
+        100% {
+            -webkit-transform: translate(20px);
+            transform: translate(20px);
+            opacity: 1;
+        }
+    }
+
+    @keyframes loading9-ani2 {
+        100% {
+            -webkit-transform: translate(20px);
+            transform: translate(20px);
+            opacity: 1;
+        }
+    }
+
+    @-webkit-keyframes loading9-ani3 {
+        100% {
+            -webkit-transform: translate(20px);
+            transform: translate(20px);
+        }
+    }
+
+    @keyframes loading9-ani3 {
+        100% {
+            -webkit-transform: translate(20px);
+            transform: translate(20px);
+        }
+    }
+
+    .main-tab {
+        width: 90%;
+        overflow: hidden;
+    }
+    </style>
+    <script>
+    function GetRequest() {
+        var url = location.search; //获取url中"?"符后的字串
+        var theRequest = new Object();
+        if (url.indexOf("?") != -1) {
+            var str = url.substr(1);
+            strs = str.split("&");
+            for (var i = 0; i < strs.length; i++) {
+                theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+            }
+        }
+        return theRequest;
+    }
+    </script>
+</head>
+
+<body>
+    <div class="content get-top-ten animated">
+        <div class="close-top-ten"></div>
+        <div class="title"><span class="top-ten-title"></span></div>
+        <div class="tabs">
+            <!--上一页-->
+            <div class="tabs-left tabs-btn disabled radius"></div>
+            <div class="main-tab">
+                <ul class="tabs-item">
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=1&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第1轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=2&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第2轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=3&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第3轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=4&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第4轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=5&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第5轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=6&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第6轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=7&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第7轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=8&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第8轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=9&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第9轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=10&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第10轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=11&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第11轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=12&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第12轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=13&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第13轮</a></li>
+                    <li class="active"><a href="./index.php?&c=entry&rid=9&round=14&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第14轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=15&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第15轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=16&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第16轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=17&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第17轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=18&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第18轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=19&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第19轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=20&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第20轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=21&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第21轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=22&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第22轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=23&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第23轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=24&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第24轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=25&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第25轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=26&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第26轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=27&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第27轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=28&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第28轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=29&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第29轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=30&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第30轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=31&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第31轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=32&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第32轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=33&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第33轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=34&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第34轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=35&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第35轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=36&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第36轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=37&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第37轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=38&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第38轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=39&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第39轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=40&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第40轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=41&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第41轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=42&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第42轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=43&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第43轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=44&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第44轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=45&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第45轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=46&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第46轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=47&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第47轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=48&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第48轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=49&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第49轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=50&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第50轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=51&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第51轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=52&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第52轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=53&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第53轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=54&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第54轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=55&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第55轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=56&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第56轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=57&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第57轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=58&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第58轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=59&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第59轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=60&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第60轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=61&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第61轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=62&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第62轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=63&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第63轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=64&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第64轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=65&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第65轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=66&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第66轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=67&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第67轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=68&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第68轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=69&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第69轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=70&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第70轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=71&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第71轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=72&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第72轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=73&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第73轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=74&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第74轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=75&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第75轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=76&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第76轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=77&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第77轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=78&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第78轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=79&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第79轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=80&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第80轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=81&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第81轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=82&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第82轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=83&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第83轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=84&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第84轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=85&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第85轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=86&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第86轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=87&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第87轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=88&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第88轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=89&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第89轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=90&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第90轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=91&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第91轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=92&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第92轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=93&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第93轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=94&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第94轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=95&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第95轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=96&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第96轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=97&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第97轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=98&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第98轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=99&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第99轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=100&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第100轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=101&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第101轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=102&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第102轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=103&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第103轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=104&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第104轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=105&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第105轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=106&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第106轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=107&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第107轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=108&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第108轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=109&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第109轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=110&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第110轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=111&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第111轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=112&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第112轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=113&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第113轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=114&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第114轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=115&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第115轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=116&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第116轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=117&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第117轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=118&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第118轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=119&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第119轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=120&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第120轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=121&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第121轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=122&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第122轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=123&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第123轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=124&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第124轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=125&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第125轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=126&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第126轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=127&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第127轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=128&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第128轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=129&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第129轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=130&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第130轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=131&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第131轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=132&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第132轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=133&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第133轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=134&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第134轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=135&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第135轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=136&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第136轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=137&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第137轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=138&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第138轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=139&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第139轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=140&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第140轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=141&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第141轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=142&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第142轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=143&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第143轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=144&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第144轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=145&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第145轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=146&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第146轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=147&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第147轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=148&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第148轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=149&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第149轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=150&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第150轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=151&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第151轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=152&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第152轮</a></li>
+                    <li class=""><a href="./index.php?&c=entry&rid=9&round=153&do=dpm_redpacketrain_result&m=haoman_dpm" class="item">第153轮</a></li>
+                </ul>
+            </div>
+            <!--下一页-->
+            <div class="tabs-right tabs-btn radius "></div>
+        </div>
+        <div class="top-list">
+            <div class="list-title">
+                <div class="avatar avatar-item">头像</div>
+                <div class="nickname nickname-item">昵称</div>
+                <div class="money money-item">红包金额</div>
+            </div>
+            <div class="top-content">
+                <!--<div class="item" style="display: block;line-height: 88px">暂无用户参与</div>-->
+                <!--加载动画-->
+                <!--<div class="loading9 content">-->
+                <!--<i></i>-->
+                <!--<i></i>-->
+                <!--<i></i>-->
+                <!--<i></i>-->
+                <!--</div>-->
+                <!--第一名-->
+                <div class="item ">
+                    <div class="avatar avatar-item">
+                        <div class="luck">
+                            <img src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLsEIsIWmoecJVqNwlUQxIJRVScQnkHibiah2qxlkuLYGjhYLTVpy7Wa8ibNvea4gAMcbXTV00G51OiaQ/132" alt="12">
+                        </div>
+                    </div>
+                    <div class="nickname nickname-item">static</div>
+                    <div class="money money-item"><span class="first{elseif$i = 2}second{elseif$i = 3}third">1</span>元</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+// console.log(1);
+// console.log(parent);
+//当前轮数
+// var round_num = $('.btn-start', parent.document);
+// console.log(window.parent.document.querySelector('.btn-start'));
+// console.log(round_num);
+var pagenum = 0;
+// 所有轮次
+var total_round = $('.tabs-item').children('li').length;
+// 所有页数
+var total_pages = parseInt(total_round  / 7);
+var round  = 46;
+pagenum = parseInt(round/7)
+toPages(pagenum);
+toggleBtnClass();
+
+//上一页--翻页
+$('.tabs-right').click(function() {
+    pagenum++;
+    toggleBtnClass();
+    console.log(pagenum);
+    if (pagenum > total_pages) {
+        pagenum = total_pages;
+        return;
+    }
+    $('.tabs-item').css('transform', 'translateX(-' + pagenum * 907 + 'px)')
+})
+//下一页翻页
+$('.tabs-left').click(function() {
+    pagenum--;
+    toggleBtnClass();
+    if (pagenum < 0) {
+        pagenum = 0;
+        return;
+    }
+    $('.tabs-item').css('transform', 'translateX(-' + pagenum * 906 + 'px)')
+})
+//切换翻页的左右按钮class类名
+function toggleBtnClass() {
+    if (pagenum > 0) {
+        $('.tabs-left').removeClass('disabled');
+    } else {
+        $('.tabs-left').addClass('disabled');
+    }
+
+    console.log(pagenum,total_pages);
+    if (pagenum >= total_pages) {
+        $('.tabs-right').addClass('disabled');
+
+    } else {
+        
+        $('.tabs-right').removeClass('disabled');
+    }
+}
+
+
+function toPages(num) {
+    $('.tabs-item').css('transform', 'translateX(-' + num * 906 + 'px)')
+}
+
+/***
+ * top榜列表的滚动事件: 检测滚动到底部的时候, 在滚回至顶部, 并解除topContent所绑定的事件
+ */
+var topContent = $('.top-content');
+topContent.scroll(function() {
+    var top = topContent.scrollTop();
+    if (top > 448) {
+        setTimeout(function() {
+            topContent.stop(true).animate({
+                scrollTop: 0
+            }, 2000);
+            topContent.unbind();
+        }, 1500)
+    }
+})
+
+
+var total_round = 153;
+var total_pages = parseInt(153 / 7);
+</script>
+
+</html>

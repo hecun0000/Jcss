@@ -2,53 +2,60 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>html5抽奖源码-红包雨 | jQuery特效|手机微信网站特效| 网页特效库</title>
+    <title>加强版红包雨</title>
     <style type="text/css">
-    body {
-        margin: 0;
-        padding: 0;
-        position: relative;
-        background-position: center;
-        width: 100%;
-        height: 100%;
-        background-size: 100% 100%;
-    }
+        body {
+            margin: 0;
+            padding: 0;
+            position: relative;
+            background-position: center;
+            width: 100%;
+            height: 100%;
+            background-size: 100% 100%;
+            overflow: hidden;
+            background-image: url(images/bg.png);
+        }
     </style>
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/ThreeCanvas.js"></script>
     <script type="text/javascript" src="js/Snow.js"></script>
     <script type="text/javascript">
-    var SCREEN_WIDTH = window.innerWidth; //
-    var SCREEN_HEIGHT = window.innerHeight;
-    var container;
-    var particle; //粒子
+        var SCREEN_WIDTH = window.innerWidth; //
+        var SCREEN_HEIGHT = window.innerHeight;
+        var container;
+        var particle; //粒子
 
-    var camera;
-    var scene;
-    var renderer;
+        var camera;
+        var scene;
+        var renderer;
 
-    var starSnow = 1;
+        var starSnow = 1;
 
-    var particles = [];
+        var particles = [];
 
-    var particleImage = new Image();
-    //THREE.ImageUtils.loadTexture( "img/ParticleSmoke.png" );
-    particleImage.src = 'images/ParticleSmoke.png';
+var raining;
+        //THREE.ImageUtils.loadTexture( "img/ParticleSmoke.png" );
+        // particleImage.src = 'images/ParticleSmoke.png';
+        // particleImage.src= Math.random()>0.5?'images/red1.png':'images/red2.png';
+        var TO_RADIANS = Math.PI / 180;
 
+        // init.prototype.rotateZ=function (angle) { //绕Z轴顺时针旋转angle;
 
+        // }
 
-    function init() {
-        //alert("message3");
-        container = document.createElement('div'); //container：画布实例;
-        document.body.appendChild(container);
+        function init() {
+            //alert("message3");
+            container = document.createElement('div'); //container：画布实例;
+            document.body.appendChild(container);
 
-        camera = new THREE.PerspectiveCamera(50, SCREEN_WIDTH / SCREEN_HEIGHT, 1, 10000);
-        camera.position.z = 1000;
-        //camera.position.y = 50;
+            camera = new THREE.PerspectiveCamera(50, SCREEN_WIDTH / SCREEN_HEIGHT, 1, 10000);
+            camera.position.z = 1000;
+            //camera.position.y = 50;
 
-        scene = new THREE.Scene();
-        scene.add(camera);
+            scene = new THREE.Scene();
+            scene.add(camera);
 
+<<<<<<< HEAD
         renderer = new THREE.CanvasRenderer();
         renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
         var material = new THREE.ParticleBasicMaterial({ map: new THREE.Texture(particleImage) });
@@ -58,45 +65,104 @@
             //alert("message");
             particle = new Particle3D(material);
             particle.position.x = Math.random() * 2000 - 1000;
+=======
+            renderer = new THREE.CanvasRenderer();
+            renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+>>>>>>> 2d1c5bf1eef26cfc8cc76a89ab9e0d49ce9828cc
 
-            particle.position.z = Math.random() * 2000 - 1000;
-            particle.position.y = Math.random() * 2000 - 1000;
-            //particle.position.y = Math.random() * (1600-particle.position.z)-1000;
-            particle.scale.x = particle.scale.y = 0.5;
-            scene.add(particle);
+            //alert("message2");
+            for (var i = 0; i < 200; i++) {
+                //alert("message");
 
-            particles.push(particle);
-        }
+                var particleImage = new Image();
+                particleImage.src = Math.random() > 0.3 ? 'images/red1.png' : 'images/red2.png';
+                var material = new THREE.ParticleBasicMaterial({
+                    map: new THREE.Texture(particleImage)
+                });
 
-        container.appendChild(renderer.domElement);
+                particle = new Particle3D(material);
 
-        setInterval(loop, 1000 / 40);
+                particle.position.x = Math.random() * 2000 - 1000;
 
-    }
+                particle.position.z = Math.random() * 2000 - 1000;
+                particle.position.y = Math.random() * 2000 - 1000;
+                //particle.position.y = Math.random() * (1600-particle.position.z)-1000;
+                particle.scale.x = particle.scale.y = .5;
+                // init.rotateZ(12);
+                particle.rotation.z = roateAngle(45, -45);
+                // console.log(particle.rotation.z)
+                scene.add(particle);
 
-    function loop() {
-        for (var i = 0; i < particles.length; i++) {
-            var particle = particles[i];
-            particle.updatePhysics();
-
-            with(particle.position) {
-                if ((y < -1000) && starSnow) { y += 2000; }
-
-                if (x > 1000) x -= 2000;
-                else if (x < -1000) x += 2000;
-                if (z > 1000) z -= 2000;
-                else if (z < -1000) z += 2000;
+                particles.push(particle);
             }
+
+            container.appendChild(renderer.domElement);
+
+            raining = setInterval(function(){
+                 for (var i = 0; i < particles.length; i++) {
+                    var particle = particles[i];
+                    // console.log(particle)
+                    particle.updatePhysics();
+                    with(particle.position){
+                     if (y < -1000) {
+                        y =1000;
+                    }
+                    }
+                   
+                    
+                }
+
+                camera.lookAt(scene.position);
+
+                renderer.render(scene, camera);
+            }, 1000 / 40);
+            console.log(particle.updatePhysics)
+        
+
+        }
+    
+        function roateAngle(max, min) {
+            return Math.PI / 180 * ((Math.random() * (max - min)) + min);
         }
 
-        camera.lookAt(scene.position);
+     
+        function loop() {
+            for (var i = 0; i < particles.length; i++) {
+                var particle = particles[i];
+                // console.log(particle)
+                particle.updatePhysics();
+                
+                with(particle.position) {
+                    if (y < -100) {
+                        y += 2000;
+                    }
+                }
+            }
 
-        renderer.render(scene, camera);
-    }
+            camera.lookAt(scene.position);
+
+            renderer.render(scene, camera);
+        }
     </script>
 </head>
-
-<body bgcolor="#eae0d9" id="body" onLoad="init()">
+<style>
+    .h1{
+        transform: translateY(1000px);
+        transition: all 8s linear
+    }
+</style>
+<body id="body" onLoad="init()">
+    <div class="close">关闭</div>
 </body>
-
+<script>
+    document.querySelector('.close').onclick=function(){
+        clearInterval(raining);
+        console.log(document.getElementsByTagName('canvas'))
+        document.getElementsByTagName('canvas')[0].style
+        .cssText=' transform: translateY(1000px);transition: all 3s linear';
+    
+        
+    }
+    
+</script>
 </html>

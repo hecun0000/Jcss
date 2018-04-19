@@ -1,17 +1,19 @@
 Particle3D=function(material){
 	THREE.Particle.call(this,material);
 	this.velocity=new THREE.Vector3(0,-8,0);//速度;
-	//this.velocity.rotateX(2);//旋转;
-	this.gravity=new THREE.Vector3(0,0,0);//加速度;
-	this.drag=1;//速度相乘系数;
+	// this.velocity.rotateX(90);//旋转;
+	// this.velocity.rotateY(90);//旋转;
+	// this.velocity.rotateZ(90);//旋转;
+	// this.gravity=new THREE.Vector3(0,-2,0);//加速度;
+	this.drag=1.2;//速度相乘系数;
 };
 //Particle:粒子;
 //prototype:原形;
 Particle3D.prototype=new THREE.Particle();
 Particle3D.prototype.constructor=Particle3D;//构造函数
 Particle3D.prototype.updatePhysics=function(){
-	this.velocity.multiplyScalar(this.drag);//矢量相乘函数
-	this.velocity.addSelf(this.gravity);//矢量相加函数
+	// this.velocity.multiplyScalar(this.drag);//矢量相乘函数
+	// this.velocity.addSelf(this.gravity);//矢量相加函数
 	this.position.addSelf(this.velocity);//矢量相加函数
 }
 var TO_RADIANS=Math.PI/180;//角度向弧度转换系数*
