@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>自定义下划线</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            background-image: linear-gradient( 135deg, #FFCF71 10%, #2376DD 100%);
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        ::-webkit-scrollbar {
+            display: none;
+            width: 0;
+            height: 0;
+        }
+
+        .main {
+            width: 75vw;
+            height: 30vh;
+            color: #fff;
+            font-size: 28px;
+            line-height: 40px;
+            position: absolute;
+            margin: auto;
+            bottom: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            /* text-indent: 56px; */
+            background-image: linear-gradient( 135deg, #EE9AE5 10%, #5961F9 100%);
+            border-radius: 10px;
+            text-align: right;
+        }
+
+        /* 文字样式 */
+
+        .text {
+            background: linear-gradient(#fff, #fff) repeat-x;
+            background-size: 100% 1px;
+            background-position: 0 1.35em;
+            /* text-shadow: .05em 0 white, -.05em 0 white; */
+        }
+
+        .info {
+            background: linear-gradient(180deg, #fff 66%, transparent 0) repeat-x;
+            background-size: 100% 1px;
+            background-position: 0 1.35em;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <div class="text">
+            人总有一天会死。但是，只要有人继续守护他的信念，那么这份信念就不会死去。    
+            <p class="info">——Meliodas</p>
+        </div>
+
+    </div>
+</body>
+
+</html>
