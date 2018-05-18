@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>demo</title>
+    <script src="http://oss.sheetjs.com/js-xlsx/xlsx.core.min.js"></script>
+    <!-- 工具类库文章说明： https://www.jianshu.com/p/ebf358632701 -->
+    <!-- 工具类库：https://gitee.com/baojuhua/lutils/tree/master -->
+    <script>
+        // <!-- https://gitee.com/baojuhua/lutils/blob/master/min/xlsx.utils.min.js -->
+        var xlsxUtils = (function () {
+            var t = {
+                Binary: {
+                    fixdata: function (e) {
+                        for (var r = "", t = 0, n = 10240; t < e.byteLength / n; ++t) r += String.fromCharCode
+                            .apply(null, new Uint8Array(e.slice(t * n, t * n + n)));
+                        return r += String.fromCharCode.apply(null, new Uint8Array(e.slice(t * n)))
+                    },
+                    s2ab: function (e) {
+                        for (var r = new ArrayBuffer(e.length), t = new Uint8Array(r), n = 0; n != e.length; ++
+                            n) t[n] = 255 & e.charCodeAt(n);
+                        return r
+                    }
+                },
+                _wb: null,
+                _rABS: !1,
+                import: function (e, r) {
+                    this.wb = null;
+                    var n = new FileReader;
+                    n.onload = function (e) {
+                        var n = e.target.result;
+                        t._wb = t._rABS ? XLSX.read(btoa(t.Binary.fixdata(n)), {
+                            type: "base64"
+                        }) : XLSX.read(n, {
+                            type: "binary"
+                        }), "function" == typeof r && r(t._wb)
+                    }, t._rABS ? n.readAsArrayBuffer(e) : n.readAsBinaryString(e)
+                },
+                getSheetByName: function (e) {
+                    return XLSX.utils.sheet_to_json(t._wb.Sheets[e])
+                },
+                getSheetByIndex: function () {
+                    var e = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : 0;
+                    return t.getSheetByName(t._wb.SheetNames[e])
+                },
+                export: function (e, r) {
+                    var n = null;
+                    for (var o in e) {
+                        var a = t.format2Sheet(e[o]);
+                        n = t.format2WB(a, o, n)
+                    }
+                    return t.format2Blob(n, r)
+                },
+                readDataHead: function (e) {
+                    var r = {},
+                        t = Array.isArray(e) ? Object.keys(e[0]) : e,
+                        n = !0,
+                        o = !1,
+                        a = void 0;
+                    try {
+                        for (var i, f = t[Symbol.iterator](); !(n = (i = f.next()).done); n = !0) {
+                            var u = i.value;
+                            r[u] = u
+                        }
+                    } catch (e) {
+                        o = !0, a = e
+                    } finally {
+                        try {
+                            !n && f.return && f.return()
+                        } finally {
+                            if (o) throw a
+                        }
+                    }
+                    return r
+                },
+                format2Sheet: function (e) {
+                    var r = Object.keys(e[0]),
+                        n = [];
+                    return e.map(function (e, n) {
+                        return r.map(function (r, o) {
+                            return Object.assign({}, {
+                                v: e[r],
+                                position: (o > 25 ? t.getCharCol(o) : String.fromCharCode(
+                                    65 + o)) + (n + 1)
+                            })
+                        })
+                    }).reduce(function (e, r) {
+                        return e.concat(r)
+                    }).forEach(function (e, r) {
+                        return n[e.position] = {
+                            v: e.v
+                        }
+                    }), n
+                },
+                format2WB: function (e) {
+                    var r = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : "mySheet",
+                        t = arguments[2],
+                        n = Object.keys(e);
+                    return t || (t = new Object, t.Sheets = {}, t.SheetNames = []), t.SheetNames.push(r),
+                        t.Sheets[r] = Object.assign({}, e, {
+                            "!ref": n[0] + ":" + n[n.length - 1]
+                        }), t
+                },
+                format2Blob: function (e, r) {
+                    return new Blob([t.Binary.s2ab(XLSX.write(e, {
+                        bookType: void 0 == r ? "xlsx" : r,
+                        bookSST: !1,
+                        type: "binary"
+                    }))], {
+                        type: ""
+                    })
+                },
+                getCharCol: function (e) {
+                    for (var r = "", t = 0; e > 0;) t = e % 26 + 1, r = String.fromCharCode(t + 64) + r,
+                        e = (e - t) / 26;
+                    return r
+                }
+            };
+            return t;
+        })();
+    </script>
+    <script>
+        // <!-- https://gitee.com/baojuhua/lutils/blob/master/min/saveAs.min.js --> 
+        function saveAs(e, t) {
+            if (!("string" != typeof e || e.length <= 0)) {
+                var n = document.createElement("a");
+                n.id = "download-" + Date.parse(new Date), n.href = e, n.download = t || "", n.style =
+                    "opacity: 0;height: 1px;width: 1px;overflow: hidden;position:fixed;top: -1;left: -1;z-index: -1;",
+                    document.body.appendChild(n), document.getElementById(n.id).click(), document.body.removeChild(
+                        document.getElementById(n.id))
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <script>
+        var data = [{
+            主页: "111",
+            名称: "6800",
+            数量: "6800",
+            昵称: "广告主网"
+        }, {
+            主页: "433",
+            名称: "6800",
+            数量: "6800",
+            昵称: "广告主网"
+        }, {
+            名称: "22",
+            商家: "6800",
+            数量: "6800",
+            昵称: "广告主网",
+        }, {
+            名称: "43",
+            商家: "6800",
+            数量: "6800",
+            昵称: "广告主网",
+        }, {
+            店家: "43",
+            价格: "6800",
+            数量: "6800",
+            昵称: "广告主网",
+        }];
+    </script>
+    <button id="down">导出</button>
+    <script>
+        var down = document.getElementById("down");
+        down.onclick = function () {
+            data.unshift(xlsxUtils.readDataHead(data));
+            var blob = xlsxUtils.export({
+                "Sheet1": data,
+                "Sheet2": [{
+                    "a": "A",
+                    "b": "B"
+                }, {
+                    "a": 1,
+                    "b": "2"
+                }, {
+                    "a": 3,
+                    "b": 4
+                }, {
+                    "a": 5,
+                    "b": 6
+                }]
+            });
+            saveAs(URL.createObjectURL(blob), "aa.xlsx");
+        };
+    </script>
+</body>
+
+</html>
