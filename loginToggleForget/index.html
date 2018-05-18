@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        @charset "UTF-8";
+        * {
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-image: linear-gradient(to bottom right, #dff0f1, #bdccd1, #a9b7c1, #98aeb2);
+            background-size: 100% 100vh;
+            background-repeat: no-repeat;
+            font-family: "Source Sans Pro", sans-serif;
+        }
+
+        .container {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            transform-style: preserve-3d;
+            perspective: 1200px;
+        }
+
+        .container .card {
+            background-color: rgba(10, 191, 113, 0.6);
+            width: 420px;
+            min-height: 270px;
+            border-radius: 8px;
+            box-shadow: 26px 33px 121px 0px rgba(0, 0, 0, 0.4);
+            padding: 30px;
+            transition: all 0.5s ease;
+        }
+
+        .container .card.challengeChosen {
+            transform: rotateY(180deg) translateZ(-70px);
+            min-height: 400px;
+            width: 300px;
+        }
+
+        .container .card.challengeChosen .back {
+            display: block;
+            margin-left: -15px;
+        }
+
+        .container .card.challengeChosen .welcometext {
+            font-weight: bold;
+            width: 240px;
+            float: right;
+        }
+
+        .container .card.challengeChosen h3,
+        .container .card.challengeChosen p,
+        .container .card.challengeChosen .download {
+            transform: rotateY(180deg);
+        }
+
+        .container .card.challengeChosen .grats {
+            margin-top: 30px;
+            width: 180px;
+            display: block;
+            float: right;
+            font-size: 11px;
+        }
+
+        .container .card h3 {
+            color: #fefefe;
+            font-size: 18px;
+            font-weight: 300;
+            margin-bottom: 30px;
+            opacity: 0.7;
+        }
+
+        .container .card p {
+            color: #272727;
+            font-size: 12px;
+            opacity: 0.8;
+            line-height: 18px;
+        }
+
+        .container .card p.back {
+            display: none;
+            color: #fefefe;
+            cursor: pointer;
+        }
+
+        .container .card p.back:hover {
+            opacity: 1;
+        }
+
+        .container .card p.back:before {
+            content: "";
+            font-family: "fontAwesome";
+            opacity: 0.7;
+            margin-right: 5px;
+        }
+
+        .container .card p.download {
+            color: #fefefe;
+            cursor: pointer;
+            position: absolute;
+            bottom: 30px;
+            right: 25px;
+            display: none;
+            font-size: 11px;
+        }
+
+        .container .card p.download:hover {
+            opacity: 1;
+        }
+
+        .container .card p.download:before {
+            content: "";
+            font-family: "fontAwesome";
+            opacity: 0.7;
+            margin-right: 5px;
+        }
+
+        .container .card p span {
+            margin-top: 30px;
+            display: block;
+        }
+
+        .container .card .btn {
+            display: inline-block;
+            user-select: none;
+            position: absolute;
+            bottom: 0;
+            padding: 25px;
+            width: 50%;
+            text-align: center;
+            background: rgba(23, 159, 100, 0.6);
+            font-size: 11px;
+            color: rgba(47, 47, 47, 0.4);
+            text-transform: uppercase;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease, background-color 0.2s ease;
+        }
+
+        .container .card .btn:hover {
+            color: rgba(47, 47, 47, 0.7);
+            background-color: rgba(23, 159, 100, 0.8);
+        }
+
+        .container .card .btn.start {
+            left: 0;
+            right: 0;
+            width: 100%;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+
+        .container .card .btn.decline {
+            left: 0;
+            border-bottom-left-radius: 8px;
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+            display: none;
+        }
+
+        .container .card .btn.accept {
+            right: 0;
+            border-bottom-right-radius: 8px;
+            display: none;
+        }
+    </style>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="card">
+            <p class="back">Back</p>
+            <h3 class="headline">Oh welcome</h3>
+            <p class="welcometext">Here you can pickup you're next coding challenge! just choose one of your liking and prevail!
+                <span>Good luck coder!
+                </span>
+            </p>
+            <p class="grats"></p>
+            <p class="download" onclick="hiddenElement">Download your challenge as .txt</p>
+            <div class="btn start">Lets get going!</div>
+            <div class="btn accept">Oh yes i accept!</div>
+            <div class="btn decline">Meh new one please</div>
+        </div>
+    </div>
+
+
+    <script>
+        //Dont look nosy!
+        var challengeArray = ['button with a jiggly animation, you know, when it looks kinda sponghy.',
+            'IOS inspired calender where you can look through the months.',
+            'material design card, with a headline and a button with a material design hover animation.',
+            'login form with username, password input and a confirmation message when the user succesfully logged in.',
+            'signup form with a confirmation message when the user succesfully signed up.',
+            'fullscreen menu with a sweet hover effect on the page links.', 'popup with a animation.',
+            'material design navigation menu with hover and active animation.',
+            'pure CSS burger menu icon with subtle hover effect.',
+            'loading animation tha consists of 3 lines, yeah thats right lines, not balls lines.',
+            'dropdown menu with bouncing in animation.', 'button with a sweet hover effect.',
+            'toggle button with a background animation when toggled.', '404 page with a subtle animation.',
+            'Pure CSS slider with animation', 'navigation bar with animated active links.',
+            'mailinglist signup with animation confirmation message.', 'sticky footer.', 'welcome animation.',
+            'pure CSS clock.', 'music player'
+        ];
+        var randomChallenge = Math.floor(Math.random() * challengeArray.length);
+        var challenge = challengeArray[randomChallenge];
+
+        $('.start').on('click', start);
+        $('.decline').on('click', newChallenge);
+        $('.accept').on('click', chooseChallenge);
+        $('.download').on('click', download);
+        $('.back').on('click', back);
+
+        function back() {
+            $('.card').removeClass('challengeChosen');
+            $('.download').fadeOut('fast');
+            $('.grats').text('');
+            start();
+        }
+
+        function start() {
+            $('.headline').text('Challenge: ' + randomChallenge);
+            $('.welcometext').text('Make a ' + challenge);
+            $('.start').fadeOut('fast');
+            $('.accept').delay(200).fadeIn('fast');
+            $('.decline').delay(200).fadeIn('fast');
+        }
+
+        function newChallenge() {
+            randomChallenge = Math.floor(Math.random() * challengeArray.length);
+            challenge = challengeArray[randomChallenge];
+            $('.welcometext').text('Make a ' + challenge);
+            $('.headline').text('Challenge: ' + randomChallenge);
+            $('.welcometext').hide();
+            $('.welcometext').fadeIn('slow');
+        }
+
+        function chooseChallenge() {
+            $('.headline').text('Your chosen challenge:');
+            $('.grats').text(' - You are very welcome to post your end result in the comments!');
+            $('.card').addClass('challengeChosen');
+            $('.accept').fadeOut('fast');
+            $('.decline').fadeOut('fast');
+            $('.download').fadeIn('fast');
+        }
+
+        function download() {
+            var hiddenElement = document.createElement('a');
+            hiddenElement.href = 'data:attachment/text,' + encodeURI('Make a ' + challenge);
+            hiddenElement.target = '_blank';
+            hiddenElement.download = 'mychallenge.txt';
+            hiddenElement.click();
+        }
+    </script>
+</body>
+
+</html>
