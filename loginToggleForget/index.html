@@ -211,20 +211,17 @@
         ];
         var randomChallenge = Math.floor(Math.random() * challengeArray.length);
         var challenge = challengeArray[randomChallenge];
-
         $('.start').on('click', start);
         $('.decline').on('click', newChallenge);
         $('.accept').on('click', chooseChallenge);
         $('.download').on('click', download);
         $('.back').on('click', back);
-
         function back() {
             $('.card').removeClass('challengeChosen');
             $('.download').fadeOut('fast');
             $('.grats').text('');
             start();
         }
-
         function start() {
             $('.headline').text('Challenge: ' + randomChallenge);
             $('.welcometext').text('Make a ' + challenge);
@@ -232,7 +229,6 @@
             $('.accept').delay(200).fadeIn('fast');
             $('.decline').delay(200).fadeIn('fast');
         }
-
         function newChallenge() {
             randomChallenge = Math.floor(Math.random() * challengeArray.length);
             challenge = challengeArray[randomChallenge];
@@ -241,7 +237,6 @@
             $('.welcometext').hide();
             $('.welcometext').fadeIn('slow');
         }
-
         function chooseChallenge() {
             $('.headline').text('Your chosen challenge:');
             $('.grats').text(' - You are very welcome to post your end result in the comments!');
@@ -250,7 +245,6 @@
             $('.decline').fadeOut('fast');
             $('.download').fadeIn('fast');
         }
-
         function download() {
             var hiddenElement = document.createElement('a');
             hiddenElement.href = 'data:attachment/text,' + encodeURI('Make a ' + challenge);

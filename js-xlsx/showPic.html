@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>显示用户本地选取的图片</title>
+</head>
+
+<body>
+    <input type="file" name="picture" accept="image/png, image/jpeg" />
+    <canvas id="canvas"></canvas>
+
+    <script>
+        document.querySelector('input[name=picture]').onchange = function (e) {
+            readFile(e.target.files[0]);
+        }
+
+        function readFile(file) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                console.log(reader.result);
+
+                
+                var src = window.URL.createObjectURL(file);
+                console.log(src);
+                
+                applyDataUrlToCanvas(src);
+
+            };
+            reader.readAsDataURL(file);
+            console.log(reader);
+
+        }
+
+        function applyDataUrlToCanvas(src) {
+            var canvas = document.getElementById('canvas');
+            console.log(canvas);
+            
+            var cxt = canvas.getContext("2d");
+            var img = new Image();
+            img.src = src;
+            console.log(img)
+            cxt.drawImage(img, 0, 0);
+        }
+    </script>
+</body>
+
+</html>
