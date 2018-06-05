@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>File API Example</title>
+</head>
+
+<body>
+    <p>FileReader类型 api：readAsDataURL和 readAsText</p>
+    <p>若选择文件为图片则会预览图片，其他则显示文本内容</p>
+    <input type="file" id="files-list">
+    <script>
+        window.onload = function () {
+
+            var filesList = document.getElementById("files-list");
+            filesList.onchange = function (event) {
+                var info = "",
+                    output = document.getElementById("output"),
+                    progress = document.getElementById("progress"),
+                    files = event.target.files,
+                    type = "default",
+                    reader = new FileReader();
+
+                if (/image/.test(files[0].type)) {
+                    // 选择文件类型为图片
+                    reader.readAsDataURL(files[0]);
+                    type = "image";
+                } else {
+                    // 其他文件类型，并指定编码类型
+                    reader.readAsText(files[0], 'gb2312');
+                    type = "text";
+                }
+
+                reader.onerror = function () {
+                    output.innerHTML = "读取文件失败";
+                };
+
+                reader.onprogress = function (event) {
+                    if (event.lengthComputable) {
+                        progress.innerHTML = event.loaded + "/" + event.total;
+                    }
+                };
+
+                reader.onload = function () {
+
+                    var html = "";
+
+                    switch (type) {
+                        case "image":
+                            html = "<img src=\"" + reader.result + "\">";
+                            break;
+                        case "text":
+                            html = reader.result;
+                            console.log(html);
+                            
+                            break;
+
+                    }
+                    output.innerHTML = html;
+                };
+            }
+        };
+    </script>
+    <div id="progress"></div>
+    <pre id="output"></pre>
+</body>
+
+</html>

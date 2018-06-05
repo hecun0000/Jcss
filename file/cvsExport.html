@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>csv导出</title>
+</head>
+
+<body>
+    <a href="./file/会员.csv" download="demo.csv" >下载测试文件</a>
+    <input type="file" id="files-list">
+    <div id="table"></div>
+    <div id="progress"></div>
+    <pre id="output"></pre>
+    <script>
+        window.onload = function () {
+
+            var filesList = document.getElementById("files-list");
+            filesList.onchange = function (event) {
+                var info = "",
+                    output = document.getElementById("output"),
+                    progress = document.getElementById("progress"),
+                    files = event.target.files,
+                    reader = new FileReader();
+                    reader.readAsText(files[0], 'gb2312');
+                    reader.onerror = function () {
+                        output.innerHTML = "读取文件失败";
+                    };
+
+                reader.onprogress = function (event) {
+                    if (event.lengthComputable) {
+                        progress.innerHTML = event.loaded + "/" + event.total;
+                    }
+                };
+
+                reader.onload = function () {
+
+                    var html = reader.result;
+                    console.log(html);
+                    textToCsv(html)
+                    // output.innerHTML = html;
+                };
+            }
+            // 将读取的数据转化为data
+            function textToCsv(data){
+                var allRows = data.split(/\n/);
+                var table = '<table>';
+                for (var singleRow = 0; singleRow < allRows.length; singleRow++) {
+                    if (singleRow === 0) {
+                        table += '<thead>';
+                        table += '<tr>';
+                    } else {
+                        table += '<tr>';
+                    }
+                    var rowCells = allRows[singleRow].split(',');
+                    for (var rowCell = 0; rowCell < rowCells.length; rowCell++) {
+                        if (singleRow === 0) {
+                            // 表格的标题
+                            table += '<th>';
+                            table += rowCells[rowCell];
+                            table += '</th>';
+                        } else {
+                            // 表格内容
+                            table += '<td>';
+                            table += rowCells[rowCell];
+                            table += '</td>';
+                        }
+                    }
+                    if (singleRow === 0) {
+                        table += '</tr>';
+                        table += '</thead>';
+                        table += '<tbody>';
+                    } else {
+                        table += '</tr>';
+                    }
+                }
+                table += '</tbody>';
+                table += '</table>';
+                console.log(table);
+                document.getElementById('table').innerHTML=table;
+            }
+        };
+    </script>
+   
+</body>
+
+</html>
