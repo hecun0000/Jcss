@@ -87,8 +87,10 @@
         function readfls(fls) {
             if (fls && fls.length > 0) {
                 ImportFile = fls[0];
+                // 从文件名中截取文件类型后缀
                 var fileX = ImportFile.name.split(".").reverse()[0];
                 var fileXyes = false;
+                // 判断文件格式
                 ["xlsx", "xlc", "xlm", "xls", "xlt", "xlw", "csv"].forEach(function (value, index, array) {
                     if (fileX === value) {
                         fileXyes = true;
@@ -99,6 +101,8 @@
                     app.fileInfo.size = ImportFile.size;
                     file2Xce(ImportFile).then(function (t) {
                         console.log("执行完毕");
+                        console.log(t);
+                        
                         if (t && t.length > 0) {
                             var tmpHead = [];
                             var pmodel = {};
@@ -117,6 +121,10 @@
         }
         var wb; //读取完成的数据　
         function file2Xce(f) {
+            console.log(f);
+            
+
+
             return new Promise(function (resolve, reject) {
                 var reader = new FileReader();
                 reader.onload = function (e) {
