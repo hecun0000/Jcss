@@ -5,9 +5,27 @@
     <title>csv导出</title>
 </head>
 
+<style>
+    table {
+        text-align: center;
+        border-collapse: collapse;
+        border: 1px solid #d4d4d4;
+    }
+
+    tr:nth-child(even) {
+        background: #d4d4d4;
+    }
+
+    th,
+    td {
+        padding: 10px 30px;
+    }
+</style>
+
 <body>
-    <a href="./file/会员.csv" download="demo.csv" >下载测试文件</a>
+    <a href="./file/会员.csv" download="demo.csv">下载测试文件</a>
     <input type="file" id="files-list">
+    <p>请上传csv文件测试</p>
     <div id="table"></div>
     <div id="progress"></div>
     <pre id="output"></pre>
@@ -21,10 +39,10 @@
                     progress = document.getElementById("progress"),
                     files = event.target.files,
                     reader = new FileReader();
-                    reader.readAsText(files[0], 'gb2312');
-                    reader.onerror = function () {
-                        output.innerHTML = "读取文件失败";
-                    };
+                reader.readAsText(files[0], 'gb2312');
+                reader.onerror = function () {
+                    output.innerHTML = "读取文件失败";
+                };
 
                 reader.onprogress = function (event) {
                     if (event.lengthComputable) {
@@ -41,10 +59,10 @@
                 };
             }
             // 将读取的数据转化为data
-            function textToCsv(data){
+            function textToCsv(data) {
                 var allRows = data.split(/\n/);
                 var table = '<table>';
-                for (var singleRow = 0; singleRow < allRows.length; singleRow++) {
+                for (var singleRow = 0; singleRow < allRows.length - 1; singleRow++) {
                     if (singleRow === 0) {
                         table += '<thead>';
                         table += '<tr>';
@@ -76,11 +94,11 @@
                 table += '</tbody>';
                 table += '</table>';
                 console.log(table);
-                document.getElementById('table').innerHTML=table;
+                document.getElementById('table').innerHTML = table;
             }
         };
     </script>
-   
+
 </body>
 
 </html>
