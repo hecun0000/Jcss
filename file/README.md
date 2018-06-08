@@ -12,7 +12,7 @@
 - readAsBinaryString(file)：读取文件并将一个字符串保存在 result 属性中，字符串中的 每个字符表示一字节。   
 - readAsArrayBuffer(file)：读取文件并将一个包含文件内容的 ArrayBuffer 保存在 result 属性中。 这些读取文件的方法为灵活地处理文件数据提供了极大便利。例如，可以读取图像文件并将其保存 为数据 URI，以便将其显示给用户，或者为了解析方便，可以将文件读取为文本形式。 
 
-## 先来个例子
+## 先来个列子
 
 需求：若读取文件为图片，则以img展示出来，其他情况则以text的形式输出。
 
@@ -134,7 +134,10 @@ function textToCsv(data) {
 ```html
 <a href="./file/会员.csv" download="demo.csv">下载测试文件</a>
 ```
-先准备数据
+
+在一般情况下，我用的数据数组的情况比较多。
+
+1. 先准备数据
 csv文件的头部数据：
 
 
@@ -191,6 +194,7 @@ var csvString = csvRows.join('\n');
 //创建a标签
 var a = document.createElement('a');
 a.setAttribute("href", 'data:attachment/csv,' + encodeURI(csvString));
+a.setAttribute("target", '_blank');
 a.setAttribute("download", '会员.csv');
 // 插入到HTML 中，点击实现下载，然后移除元素
 document.querySelector('.demo').appendChild(a);
@@ -200,3 +204,25 @@ document.querySelector('.demo').removeChild(a);
 另外，
 将json文件转化为csv格式可以利用[json2csv](https://github.com/zemirco/json2csv)
 
+
+## excel文件读取
+
+
+
+## excel文件导出
+
+
+
+
+
+
+
+
+
+
+
+
+参考文章： 
+
+1. [理解DOMString、Document、FormData、Blob、File、ArrayBuffer数据类型--张鑫旭](http://www.zhangxinxu.com/wordpress/2013/10/understand-domstring-document-formdata-blob-file-arraybuffer/)  
+2. [文件和二进制数据的操作--阮一峰](http://javascript.ruanyifeng.com/htmlapi/file.html)
