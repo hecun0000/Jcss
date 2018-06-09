@@ -8,6 +8,7 @@
 </head>
 
 <body>
+    <button onclick='saveAs(csvString)'>下载</button>
     <div class="demo"> </div>
     <script type="text/javascript" charset="utf-8">
         var people = [{
@@ -45,20 +46,20 @@
             csvRows.push(head[j].join(','))
         }
         //s4. 把新数组用 \n 回车连接，形成csvString 
-        var csvString = csvRows.join('\n'); //BOM的方式解决EXCEL乱码问题 
-
+        var csvString = csvRows.join('\n');
+        //BOM的方式解决EXCEL乱码问题 
         var BOM = '\uFEFF';
         csvString = BOM + csvString;
-
-        //s5. 创建a标签
-        var a = document.createElement('a');
-        a.setAttribute("href", 'data:attachment/csv,' + encodeURI(csvString));
-        a.setAttribute("target", '_blank');
-        a.setAttribute("download", '会员.csv');
-        // 插入到HTML 中，点击实现下载，然后移除元素
-        document.querySelector('.demo').appendChild(a);
-        a.click();
-        document.querySelector('.demo').removeChild(a);
+        // s5: 利用a标签实现下载功能
+        function saveAs(obj, fileName) { 
+            var tmpa = document.createElement("a");
+            tmpa.download = fileName || "下载.csv";
+            tmpa.href ='data:attachment/csv,' + encodeURI(obj); //绑定a标签
+            tmpa.click(); //模拟点击实现下载
+            setTimeout(function () { //延时释放
+                URL.revokeObjectURL(obj); //用URL.revokeObjectURL()来释放这个object URL
+            }, 100);
+        }
     </script>
 </body>
 
