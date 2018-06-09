@@ -12,7 +12,7 @@
 - readAsBinaryString(file)：读取文件并将一个字符串保存在 result 属性中，字符串中的 每个字符表示一字节。   
 - readAsArrayBuffer(file)：读取文件并将一个包含文件内容的 ArrayBuffer 保存在 result 属性中。 这些读取文件的方法为灵活地处理文件数据提供了极大便利。例如，可以读取图像文件并将其保存 为数据 URI，以便将其显示给用户，或者为了解析方便，可以将文件读取为文本形式。 
 
-## 先来个列子
+## 先来个例子
 
 需求：若读取文件为图片，则以img展示出来，其他情况则以text的形式输出。
 
@@ -135,9 +135,7 @@ function textToCsv(data) {
 <a href="./file/会员.csv" download="demo.csv">下载测试文件</a>
 ```
 
-在一般情况下，我用的数据数组的情况比较多。
-
-1. 先准备数据
+先准备数据
 csv文件的头部数据：
 
 
@@ -201,12 +199,72 @@ document.querySelector('.demo').appendChild(a);
 a.click();
 document.querySelector('.demo').removeChild(a);
 ```
+[演示链接](https://hecun0000.github.io/Jcss/file/csvDownload.html)  
+**效果图**
+![image](http://oxi9lrcsm.bkt.clouddn.com/csv12321.png)
+
 另外，
 将json文件转化为csv格式可以利用[json2csv](https://github.com/zemirco/json2csv)
 
 
-## excel文件读取
 
+下面将使用[js-xlsx](https://docs.sheetjs.com/#sheetjs-js-xlsx)对csv文件进行操作：
+
+## excel文件读取  
+
+xlsx相关api:  
+- XLSX.utils.sheet_to_json方法解析表格对象返回相应的JSON数据
+- XLSX.read()以二进制流方式读取excel数据
+
+在JavaScript中，有2个函数分别用来处理解码和编码base64 字符串：
+
+- atob() 函数能够解码通过base-64编码的字符串数据。
+- btoa() 函数能够从二进制数据“字符串”创建一个base-64编码的ASCII字符串。
+
+步骤：   
+1. readAsArrayBuffer可以将读取的数据转化为二进制数据；
+2. 通过btoa()将数据转化为base64格式；
+3. 然后结合XLSX.utils.sheet_to_json转化为json
+
+```js
+var wb;//读取完成的数据
+ //导入
+function importf(obj) {
+    if (!obj.files) {
+        return;
+    }
+    var f = obj.files[0];
+    var reader = new FileReader();
+    reader.readAsArrayBuffer(f);
+    reader.onload = function (e) {
+        var data = e.target.result;
+        var wb =XLSX.read(btoa(fixedData(data)), { type: 'base64' });//将数据转化为二进制
+        //wb.SheetNames[0]是获取Sheets中第一个Sheet的名字
+        //wb.Sheets[Sheet名]获取第一个Sheet的数据
+        document.getElementById("excel").innerHTML = JSON.stringify(XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]));
+    };
+
+}
+```
+```js
+//文件流转BinaryString
+function fixedData(data) {
+    let o = ''
+    let l = 0
+    const w = 10240
+    for (; l < data.byteLength / w; ++l) o += String.fromCharCode.apply(null, new Uint8Array(data.slice(l * w,
+        l * w + w)))
+    o += String.fromCharCode.apply(null, new Uint8Array(data.slice(l * w)))
+    return o
+}
+```
+
+效果图预览： 
+![image](http://oxi9lrcsm.bkt.clouddn.com/xlsxsave.png)
+[查看演示](https://hecun0000.github.io/Jcss/file/xlsx-export.html)
+
+附上一个vue-element-admin关于Excel文件读取的源码：
+[查看链接](https://github.com/PanJiaChen/vue-element-admin/blob/master/src/components/UploadExcel/index.vue)
 
 
 ## excel文件导出
