@@ -60,9 +60,11 @@ reader.onload = function () {
 
 **读取图片**   
 
+
 ![image](http://oxi9lrcsm.bkt.clouddn.com/IMG.png)
 
-**读取csv文件**
+**读取csv文件**   
+
 ![image](http://oxi9lrcsm.bkt.clouddn.com/csv.png)
 
     在利用readAsText进行读取的时候，要指定一下编码形式。如readAsText(files[0], 'gb2312');   
@@ -119,7 +121,7 @@ function textToCsv(data) {
     document.getElementById('table').innerHTML = table;
 }
 ```
-**效果图如下：**
+**效果图如下：**   
 
 ![image](http://oxi9lrcsm.bkt.clouddn.com/csvout.png)
 
@@ -187,20 +189,21 @@ var csvString = csvRows.join('\n');
 ```
 
 最后实现下载： 
-
 ```js
-//创建a标签
-var a = document.createElement('a');
-a.setAttribute("href", 'data:attachment/csv,' + encodeURI(csvString));
-a.setAttribute("target", '_blank');
-a.setAttribute("download", '会员.csv');
-// 插入到HTML 中，点击实现下载，然后移除元素
-document.querySelector('.demo').appendChild(a);
-a.click();
-document.querySelector('.demo').removeChild(a);
+//利用a标签实现下载
+function saveAs(obj, fileName) { 
+    var tmpa = document.createElement("a");
+    tmpa.download = fileName || "下载.csv";
+    tmpa.href ='data:attachment/csv,' + encodeURI(obj); //绑定a标签
+    tmpa.click(); //模拟点击实现下载
+    setTimeout(function () { //延时释放
+        URL.revokeObjectURL(obj); //用URL.revokeObjectURL()来释放这个object URL
+    }, 100);
+}
 ```
 [演示链接](https://hecun0000.github.io/Jcss/file/csvDownload.html)  
-**效果图**
+**效果图**    
+
 ![image](http://oxi9lrcsm.bkt.clouddn.com/csv12321.png)
 
 另外，
@@ -267,17 +270,109 @@ function fixedData(data) {
 [查看链接](https://github.com/PanJiaChen/vue-element-admin/blob/master/src/components/UploadExcel/index.vue)
 
 
-## excel文件导出
+## Excel文件导出
+
+这里依然会用到js-xlsx, 文件下载采用FileSaver.js
+
+```html
+ <button onclick="downloadExl(people)">导出</button>
+```
+
+1. 数据准备
+
+```js
+ var people = [{
+    "name": "吴三桂",
+    "phone": "18709237410",
+    "level": "黄金",
+    "birthday": "1989/8/5",
+    "points": "100"
+}, {
+    "name": "史泰龙",
+    "phone": "18709237401",
+    "level": "青铜2",
+    "birthday": "1993/9/6",
+    "points": "300"
+}, {
+    "name": "阿超",
+    "phone": "18883920287",
+    "level": "白金",
+    "birthday": "1993/9/3",
+    "points": "500"
+}];
+```
+下来定义一个wb保存导出数据
+
+```js
+var wb = {
+  SheetNames: ["Sheet1"],   //标题名
+  Sheets: { }               //保存表内的数据
+}
+```
+
+
+2. XLSX.utils.json_to_sheet(people)：可以将json对象转化为工作表；将转化的结果赋值非 wb.Sheets['Sheet1']    
+
+这里将转化后的结果打印出来   
+
+![image](http://oxi9lrcsm.bkt.clouddn.com/微信截图_20180610122553.png)
+!ref: 表示表格输出的范围
+A1-Zx: 这些就对应的是Excel中单元格的位置；
+
+其中：Sheet1相关参数介绍：
+
+
+键名 | 值
+---|---
+v | 原始值
+t | b布尔值，e错误，n数字，d日期，s文本
+
+更多属性请参照： [官方文档](https://docs.sheetjs.com/#general-structures)
+
+
+3. 指定导出格式,这里采用xlsx格式
+
+```js
+const wopts = { bookType: 'ods', bookSST: false, type: 'binary' };//ods格式
+// const wopts = { bookType: 'xlsb', bookSST: false, type: 'binary' };//xlsb格式
+// const wopts = { bookType: 'fods', bookSST: false, type: 'binary' };//fods格式
+// const wopts = { bookType: 'biff2', bookSST: false, type: 'binary' };//xls格式
+```
+
+
+3. 设置表头 将工作表的A1-Z1等替换称为中文
 
 
 
+```js
+// 将指定的自然数转换为26进制表示。映射关系：[0-25] -> [A-Z]。
+function getCharCol(n) {
+    var temCol = '',
+        s = '',
+        m = 0
+    while (n >= 0) {
+        m = n % 26 + 1
+        s = String.fromCharCode(m + 64) + s
+        n = (n - m) / 26
+    }
+    return s
+};
+["ID","手机号","等级" ,"生日","积分"].forEach((v,i)=>{data[getCharCol(i)+1] = { t: "s", v: v ,w:v};})
+```
 
 
+5. 下载保存，  
 
 
+利用XLSX.write(wb, wopts);  
+wb: 二进制数据流   
+wopts: 指定的导出格式等信息  
 
+下载保存这次不采用a标签的方式。采用[FileSaver.js](http://sheetjs.com/demos/FileSaver.js)
 
-
+```js
+saveAs(new Blob([s2ab(XLSX.write(wb, wopts))], {type: "application/octet-stream"}), "js-xlsx文件下载实例" + '.' + wopts.bookType);
+```
 
 
 参考文章： 
