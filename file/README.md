@@ -1,4 +1,4 @@
-# js实现csv和excel读取和下载
+# csv和excel读取和下载
 
 在html5中，DOM给文件中添加了一个files集合,在选取文件中，files中包含一个File对象，每个对象都有下列属性： 
 - name: 本地文件的文件名
