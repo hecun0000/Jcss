@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html>
 
@@ -98,4 +99,103 @@
     </script>
 </body>
 
+=======
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>js-xlsx导出</title>
+    <script src="http://oss.sheetjs.com/js-xlsx/xlsx.full.min.js"></script>
+    <script src="http://sheetjs.com/demos/FileSaver.js"></script>
+</head>
+
+<body>
+    <button onclick="downloadExl(people)">导出</button>
+
+    <script>
+        // 准备导出数据
+        var people = [{
+            "name": "吴三桂",
+            "phone": "18709237410",
+            "level": "黄金",
+            "birthday": "1989/8/5",
+            "points": "100"
+        }, {
+            "name": "史泰龙",
+            "phone": "18709237401",
+            "level": "青铜2",
+            "birthday": "1993/9/6",
+            "points": "300"
+        }, {
+            "name": "阿超",
+            "phone": "18883920287",
+            "level": "白金",
+            "birthday": "1993/9/3",
+            "points": "500"
+        }];
+        const wopts = {
+            bookType: 'xlsx',
+            bookSST: false,
+            type: 'binary'
+        };
+        //这里的数据是用来定义导出的格式类型
+        // const wopts = { bookType: 'csv', bookSST: false, type: 'binary' };//ods格式
+        // const wopts = { bookType: 'ods', bookSST: false, type: 'binary' };//ods格式
+        // const wopts = { bookType: 'xlsb', bookSST: false, type: 'binary' };//xlsb格式
+        // const wopts = { bookType: 'fods', bookSST: false, type: 'binary' };//fods格式
+        // const wopts = { bookType: 'biff2', bookSST: false, type: 'binary' };//xls格式
+
+        function downloadExl(data, type) {
+            const wb = {
+                SheetNames: ['Sheet1'],
+                Sheets: {}
+            };
+            //通过json_to_sheet转成单页(Sheet)数据
+            var data = XLSX.utils.json_to_sheet(data); 
+
+            console.log(data);
+            // 替换表头
+            ["ID", "手机号", "等级", "生日", "积分"].forEach((v, i) => {
+                data[getCharCol(i) + 1] = {
+                    t: "s",
+                    v: v
+                };
+            })
+            wb.Sheets['Sheet1'] = data;
+            saveAs(new Blob([s2ab(XLSX.write(wb, wopts))], {
+                type: "application/octet-stream"
+            }), "测试Excel文件导出" + '.' + (wopts.bookType == "biff2" ? "xls" : wopts.bookType));
+        }
+
+        function s2ab(s) {
+            if (typeof ArrayBuffer !== 'undefined') {
+                var buf = new ArrayBuffer(s.length);
+                var view = new Uint8Array(buf);
+                for (var i = 0; i != s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+                return buf;
+            } else {
+                var buf = new Array(s.length);
+                for (var i = 0; i != s.length; ++i) buf[i] = s.charCodeAt(i) & 0xFF;
+                return buf;
+            }
+        }
+
+        function getCharCol(n) {
+            var temCol = '',
+                s = '',
+                m = 0
+            while (n >= 0) {
+                m = n % 26 + 1
+                s = String.fromCharCode(m + 64) + s
+                n = (n - m) / 26
+            }
+            return s
+        };
+    </script>
+</body>
+
+>>>>>>> 6368284718d4ee8a7fe45393a66a5ca1d88521ec
 </html>

@@ -1,4 +1,4 @@
-# js实现csv和excel导出
+# csv和excel读取和下载
 
 在html5中，DOM给文件中添加了一个files集合,在选取文件中，files中包含一个File对象，每个对象都有下列属性： 
 - name: 本地文件的文件名
@@ -77,7 +77,7 @@ reader.onload = function () {
 
 利用上面所说的csv的特点就可以利用js进行循环遍历拿到每一项的数据。  
 
-[演示链接](https://hecun0000.github.io/Jcss/file/cvsExport.html)   
+[演示链接](https://hecun0000.github.io/Jcss/file/cvsRead.html)   
 
 其中，我将CVS中的数据转化后，并拼在了table元素中：
 
@@ -264,7 +264,7 @@ function fixedData(data) {
 
 效果图预览： 
 ![image](http://oxi9lrcsm.bkt.clouddn.com/xlsxsave.png)
-[查看演示](https://hecun0000.github.io/Jcss/file/xlsx-export.html)
+[查看演示](https://hecun0000.github.io/Jcss/file/xlsxRead.html)
 
 附上一个vue-element-admin关于Excel文件读取的源码：
 [查看链接](https://github.com/PanJiaChen/vue-element-admin/blob/master/src/components/UploadExcel/index.vue)
@@ -301,23 +301,48 @@ function fixedData(data) {
     "points": "500"
 }];
 ```
-2. XLSX.utils.json_to_sheet(data)：可以将json对象转化为工作表；
+下来定义一个wb保存导出数据
 
+```js
+var wb = {
+  SheetNames: ["Sheet1"],   //标题名
+  Sheets: { }               //保存表内的数据
+}
+```
+
+
+2. XLSX.utils.json_to_sheet(people)：可以将json对象转化为工作表；将转化的结果赋值非 wb.Sheets['Sheet1']    
+
+这里将转化后的结果打印出来   
+
+![image](http://oxi9lrcsm.bkt.clouddn.com/微信截图_20180610122553.png)   
+
+!ref: 表示表格输出的范围   
+A1-Zx: 这些就对应的是Excel中单元格的位置；
+
+其中：Sheet1相关参数介绍：
+
+
+键名 | 值
+---|---
+v | 原始值
+t | b布尔值，e错误，n数字，d日期，s文本
+
+更多属性请参照： [官方文档](https://docs.sheetjs.com/#general-structures)
 
 
 3. 指定导出格式,这里采用xlsx格式
 
 ```js
-const wopts = { bookType: 'ods', bookSST: false, type: 'binary' };//ods格式
+ const wopts = { bookType: 'xlsx', bookSST: false,type: 'binary' };
+//这里的数据是用来定义导出的格式类型
+// const wopts = { bookType: 'csv', bookSST: false, type: 'binary' };//ods格式
+// const wopts = { bookType: 'ods', bookSST: false, type: 'binary' };//ods格式
 // const wopts = { bookType: 'xlsb', bookSST: false, type: 'binary' };//xlsb格式
 // const wopts = { bookType: 'fods', bookSST: false, type: 'binary' };//fods格式
 // const wopts = { bookType: 'biff2', bookSST: false, type: 'binary' };//xls格式
 ```
-
-
-3. 设置表头 将工作表的A1-Z1等替换称为中文
-
-
+4. 设置表头 将工作表的A1-Z1等替换称为中文
 
 ```js
 // 将指定的自然数转换为26进制表示。映射关系：[0-25] -> [A-Z]。
@@ -336,24 +361,19 @@ function getCharCol(n) {
 ```
 
 
-5. 下载保存，采用[FileSaver.js](http://sheetjs.com/demos/FileSaver.js)
+5. 下载保存，  
+
+利用XLSX.write(wb, wopts);  
+wb: 二进制数据流   
+wopts: 指定的导出格式等信息  
+
+下载保存这次不采用a标签的方式。采用[FileSaver.js](http://sheetjs.com/demos/FileSaver.js)
 
 ```js
 saveAs(new Blob([s2ab(XLSX.write(wb, wopts))], {type: "application/octet-stream"}), "js-xlsx文件下载实例" + '.' + wopts.bookType);
 ```
 
-6. 
-
-```
-saveAs
-```
-
-
-
-
-
-
-
+[查看演示](https://hecun0000.github.io/Jcss/file/xlsxDownload.html)
 
 参考文章： 
 
