@@ -25,8 +25,7 @@
 
 <script>
 // 引入xlsx
-import XLSX from "xlsx";
-
+import XLSX from "xlsx"
 export default {
   name: "Index",
   data() {
