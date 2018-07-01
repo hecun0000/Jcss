@@ -3,7 +3,7 @@ import c from "./c.js";
 
 const a = {
     init() {
-        console.log("this is a test");
+        console.log("this is a test ");
     },
 
     cinit() {
