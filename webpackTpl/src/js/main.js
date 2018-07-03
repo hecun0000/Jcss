@@ -5,7 +5,7 @@ import '../css/test.scss'
 
 
 const test=()=>{
-    console.log(1232132321)
+    console.log(123213)
 }
 
 test();

@@ -1,0 +1,73 @@
+/* 定义颜色值变量 */
+$colorGroup: #33B5E5 #AA66CC #99CC00 #FF8800 #CC0000 #669900;
+.webpack {
+    transform-style: preserve-3d;
+    transform-origin: 150px 150px;
+    transform: rotateX(-35.5deg) rotateY(45deg);
+    margin: auto;
+    margin-top: 150px;
+    width: 300px;
+    height: 400px;
+    animation: rotate-box 6s ease-in-out infinite 2s;
+}
+
+@keyframes rotate-box {
+    0% {
+        transform: rotateX(-35.5deg) rotateY(45deg);
+    }
+    40%,
+    to {
+        transform: rotateX(-35.5deg) rotateY(-315deg);
+    }
+}
+
+.webpack .item {
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: .3;
+}
+
+/* 上 */
+
+.webpack .item1 {
+    background: nth($colorGroup,1);
+    transform: rotateX(90deg) rotateY(0deg) translateZ(150px);
+}
+
+/* 下 */
+
+.webpack .item2 {
+    background: nth($colorGroup, 2);
+    transform: rotateX(90deg) rotateY(0deg) translateZ(-150px);
+}
+
+/* 左 */
+
+.webpack .item3 {
+    background: nth($colorGroup, 3);
+    transform: rotateX(0deg) rotateY(90deg) translateZ(150px);
+}
+
+/* 右 */
+
+.webpack .item4 {
+    background: nth($colorGroup, 4);
+    transform: rotateX(0deg) rotateY(90deg) translateZ(-150px);
+}
+
+/* 前 */
+
+.webpack .item5 {
+    background:nth($colorGroup, 5);
+    transform: rotateX(0deg) rotateY(0deg) translateZ(150px);
+}
+
+/* 后 */
+
+.webpack .item6 {
+    background: nth($colorGroup, 6);
+    transform: rotateX(0deg) rotateY(0deg) translateZ(-150px);
+}
