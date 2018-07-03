@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin'); //引入html-webpack-plugin
 const CleanWebpackPlugin = require('clean-webpack-plugin'); //引入
 const webpack = require("webpack");
+const autoprefixer = require('autoprefixer')
 
 module.exports = {
     entry: './src/js/main.js',

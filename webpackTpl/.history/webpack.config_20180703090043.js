@@ -4,7 +4,8 @@ const CleanWebpackPlugin = require('clean-webpack-plugin'); //引入
 const webpack = require("webpack");
 
 module.exports = {
-    entry: './src/js/main.js',
+    entry: './src/js/main.js'
+    ,
     output: {                        //出口文件
         filename: "[name].bundle.[hash].js", //[hash]会在后面生成随机hash值
         path: path.join(__dirname, "dist")
@@ -14,11 +15,11 @@ module.exports = {
         rules: [
             {
                 test: /\.css$/,
-                use: ['style-loader', 'css-loader','postcss-loader']
+                use: ['style-loader', 'css-loader']
             },
             {
                 test:/\.scss$/,
-                use: ['style-loader', 'css-loader', 'sass-loader', 'postcss-loader']
+                use: ['style-loader', 'css-loader','sass-loader']
             },
             {
                 test: /\.js/,
@@ -36,7 +37,7 @@ module.exports = {
                 }]
             }
 
-        ],
+        ]
     },
     plugins: [ // 对应的插件
         new HtmlWebpackPlugin({ //配置

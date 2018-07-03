@@ -14,11 +14,11 @@ module.exports = {
         rules: [
             {
                 test: /\.css$/,
-                use: ['style-loader', 'css-loader','postcss-loader']
+                use: ['style-loader', 'css-loader']
             },
             {
                 test:/\.scss$/,
-                use: ['style-loader', 'css-loader', 'sass-loader', 'postcss-loader']
+                use: ['style-loader', 'css-loader','sass-loader']
             },
             {
                 test: /\.js/,
@@ -36,7 +36,7 @@ module.exports = {
                 }]
             }
 
-        ],
+        ]
     },
     plugins: [ // 对应的插件
         new HtmlWebpackPlugin({ //配置

@@ -45,17 +45,9 @@ module.exports = {
         }),
         new CleanWebpackPlugin(['dist']), //传入数组,指定要删除的目录
         // 热更新，热更新不是刷新
-        new webpack.HotModuleReplacementPlugin()
-    ],
-    devServer: {
-        inline: true, //打包后加入一个websocket客户端
-        hot: true, //热加载
-        contentBase: path.resolve(__dirname, 'dist'), //开发服务运行时的文件根目录
-        host: 'localhost', //主机地址
-        port: 9090, //端口号
-        compress: true //开发服务器是否启动gzip等压缩
-    },
-    optimization: {
+        new webpack.HotModuleReplacementPlugin(),
+
+         optimization: {
         splitChunks: {
             cacheGroups: {
                 commons: { // 抽离自己写的公共代码
@@ -74,6 +66,16 @@ module.exports = {
             }
         }
     },
+    ],
+    devServer: {
+        inline: true, //打包后加入一个websocket客户端
+        hot: true, //热加载
+        contentBase: path.resolve(__dirname, 'dist'), //开发服务运行时的文件根目录
+        host: 'localhost', //主机地址
+        port: 9090, //端口号
+        compress: true //开发服务器是否启动gzip等压缩
+    },
+   
 }
 
 

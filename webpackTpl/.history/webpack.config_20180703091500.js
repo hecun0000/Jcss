@@ -14,7 +14,7 @@ module.exports = {
         rules: [
             {
                 test: /\.css$/,
-                use: ['style-loader', 'css-loader','postcss-loader']
+                use: ['style-loader', 'css-loader']
             },
             {
                 test:/\.scss$/,
@@ -37,6 +37,9 @@ module.exports = {
             }
 
         ],
+        postcss: [autoprefixer({
+            browsers: ['last 2 versions']
+        })]
     },
     plugins: [ // 对应的插件
         new HtmlWebpackPlugin({ //配置

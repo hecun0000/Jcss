@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin'); //引入html-webpack-p
 const CleanWebpackPlugin = require('clean-webpack-plugin'); //引入
 const webpack = require("webpack");
 
+
 module.exports = {
     entry: './src/js/main.js',
     output: {                        //出口文件
@@ -14,7 +15,7 @@ module.exports = {
         rules: [
             {
                 test: /\.css$/,
-                use: ['style-loader', 'css-loader','postcss-loader']
+                use: ['style-loader', 'css-loader']
             },
             {
                 test:/\.scss$/,
@@ -37,6 +38,9 @@ module.exports = {
             }
 
         ],
+        postcss: [autoprefixer({
+            browsers: ['last 2 versions']
+        })]
     },
     plugins: [ // 对应的插件
         new HtmlWebpackPlugin({ //配置
