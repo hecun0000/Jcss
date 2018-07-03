@@ -1,0 +1,7 @@
+body{
+    background: #6cf url(../img/1.jpg);
+    font-size: 60px;
+    color: #fff;
+    padding: 0;
+    display: flex;
+}
