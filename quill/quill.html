@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="toolbar">
+        <!-- Add font size dropdown -->
+       
+        <!-- Add a bold button -->
+        <button class="ql-bold" title="粗体"></button>
+        <button class="ql-italic" title="斜体"></button>
+        <button class="ql-underline" title="下划线"></button>
+        <button class="ql-strike" title="删除线"></button>
+        <!-- <button class="ql-italic"></button> -->
+        <button class="ql-list" value="ordered" title="有序列表"></button>
+        <button class="ql-list" value="bullet"  title="无序列表"></button>
+
+        <!-- Add subscript and superscript buttons -->
+        <button class="ql-script" value="sub"></button>
+        <button class="ql-script" value="super"></button>
+
+        <button class="ql-indent" value="-1"></button>
+        <button class="ql-indent" value="+1" title="首行缩进"></button>
+        <select class="ql-size" title="标题样式">
+            <option value="small"></option>
+            <!-- Note a missing, thus falsy value, is used to reset to default -->
+            <option selected></option>
+            <option value="large"></option>
+            <option value="huge"></option>
+        </select>
+        <select class="ql-color" title="字体颜色"> </select>
+        <select class="ql-align" title="对齐方式"> </select>
+        <button class="ql-image" title="添加图片"></button>
+    </div>
+    <div id="editor"></div>
+
+    <!-- Initialize editor with toolbar -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script>
+        var quill = new Quill('#editor', {
+            modules: {
+                toolbar: '#toolbar'
+            },
+            theme: 'snow'
+        });
+    </script>
+</body>
+
+</html>
