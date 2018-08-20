@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>button</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: teal;
+        }
+
+        :root {
+            font-size: 10px;
+        }
+
+        nav ul {
+            padding: 0;
+            list-style-type: none;
+        }
+
+        nav li {
+            width: 20rem;
+            height: 7rem;
+            font-size: 20px;
+            text-align: center;
+            line-height: 7rem;
+            font-family: sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            transition: 0.3s;
+            margin: 3rem;
+            background: #fff;
+            box-shadow: 1.5rem 1.5rem goldenrod;
+            transition: all .3s linear;
+        }
+
+        nav li:hover {
+            color: #fff;
+            background: goldenrod;
+            transform: translate(1.5rem, 1.5rem);
+            box-shadow: -1.5rem -1.5rem #fff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <ul>
+            <li>home</li>
+            <li>products</li>
+            <li>services</li>
+            <li>contact</li>
+        </ul>
+    </nav>
+</body>
+
+</html>
