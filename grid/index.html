@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>我的第一个Grid布局</title>
+    <style>
+        .box {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-rows: repeat(3, 180px);
+            grid-gap: 5px;
+        }
+
+        .box>div {
+            color: #fff;
+            font-size: 30px;
+        }
+
+        .box img {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+
+
+
+</head>
+
+<body>
+    <div class="box">
+        <div>
+            <img src="http://oxi9lrcsm.bkt.clouddn.com/51217728_p0.jpg" alt="">
+        </div>
+        <div>
+            <img src="http://oxi9lrcsm.bkt.clouddn.com/51217728_p0.jpg" alt="">
+        </div>
+        <div>
+            <img src="http://oxi9lrcsm.bkt.clouddn.com/51217728_p0.jpg" alt="">
+        </div>
+        <div>
+            <img src="http://oxi9lrcsm.bkt.clouddn.com/51217728_p0.jpg" alt="">
+        </div>
+
+        <div>
+            <img src="http://oxi9lrcsm.bkt.clouddn.com/51217728_p0.jpg" alt="">
+        </div>
+        <div>
+            <img src="http://oxi9lrcsm.bkt.clouddn.com/51217728_p0.jpg" alt="">
+        </div>
+    </div>
+</body>
+
+</html>
