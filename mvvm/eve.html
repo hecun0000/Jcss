@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>表达式模板解析</title>
+    <script src="js/mvvm.js"></script>
+    <script src="js/compile.js"></script>
+</head>
+<body>
+<div id="test">
+    <p>
+        {{name}}
+    </p>
+
+</div>
+
+
+
+
+<script>
+
+    const vm = new MVVM({
+        el: '#test',
+        data: {
+            name: 'hecun'
+        }
+    })
+
+    console.log(vm)
+
+</script>
+
+</body>
+</html>
