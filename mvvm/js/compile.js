@@ -21,7 +21,7 @@ Compile.prototype = {
 
     },
 
-    node2Fragment(el){
+    node2Fragment:function(el){
         let fragment = document.createDocumentFragment(), child;
 
         while (child = el.firstChild) {
