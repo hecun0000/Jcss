@@ -15,8 +15,9 @@ function MVVM(options) {
         that._proxy(key)
     })
 
+    // observe(data,this);
 
-
+    this.$compile = new Compile(options.el || document.body,this)
 
 
 
@@ -24,6 +25,9 @@ function MVVM(options) {
 }
 
 MVVM.prototype= {
+    $watch: function(key , cb ,options){
+        new Watcher(this,key ,cb)
+    },
     //实现数据代理
     _proxy: function (key) {
         let that = this;
